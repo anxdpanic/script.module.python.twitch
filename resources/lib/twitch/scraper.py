@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
-import six
+import requests
+# import six
 from six.moves.urllib.error import URLError
 from six.moves.urllib.parse import quote_plus  # NOQA
 from six.moves.urllib.parse import urlencode
-from six.moves.urllib.request import Request, urlopen
+# from six.moves.urllib.request import Request, urlopen
 
 from twitch.keys import USER_AGENT, USER_AGENT_STRING
 from twitch.logging import log
@@ -41,14 +42,9 @@ def download(baseurl, parameters={}, headers={}):
     data = ""
     for _ in range(MAX_RETRIES):
         try:
-            req = Request(url, headers=headers)
-            req.add_header(USER_AGENT, USER_AGENT_STRING)
-            response = urlopen(req)
-            if six.PY2:
-                data = response.read()
-            else:
-                data = response.read().decode('utf-8')
-            response.close()
+            headers.update({USER_AGENT: USER_AGENT_STRING})
+            response = requests.get(url, headers=headers)
+            data = response.content
             break
         except Exception as err:
             if not isinstance(err, URLError):
