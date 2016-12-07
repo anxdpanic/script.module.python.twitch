@@ -87,6 +87,7 @@ class ApiQuery(JsonQuery):
 
 class HiddenApiQuery(JsonQuery):
     def __init__(self, path, headers={}):
+        headers.setdefault('Client-Id', CLIENT_ID)
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers)
         self.add_path(path)
 
