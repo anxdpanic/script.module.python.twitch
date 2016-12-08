@@ -2,7 +2,7 @@
 
 from six.moves.urllib.parse import urljoin
 
-from twitch import CLIENT_ID
+from twitch import CLIENT_ID, OAUTH_TOKEN
 from twitch.exceptions import ResourceUnavailableException
 from twitch.logging import log
 from twitch.scraper import download, get_json
@@ -81,6 +81,7 @@ class JsonQuery(_Query):
 class ApiQuery(JsonQuery):
     def __init__(self, path, headers={}):
         headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(ApiQuery, self).__init__(_kraken_baseurl, headers)
         self.add_path(path)
 
@@ -88,12 +89,15 @@ class ApiQuery(JsonQuery):
 class HiddenApiQuery(JsonQuery):
     def __init__(self, path, headers={}):
         headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers)
         self.add_path(path)
 
 
 class UsherQuery(DownloadQuery):
     def __init__(self, path, headers={}):
+        headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers)
         self.add_path(path)
 
