@@ -8,7 +8,7 @@ from twitch.logging import log
 from twitch.scraper import download, get_json
 
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
-_hidden_baseurl = 'http://api.twitch.tv/api/'
+_hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'http://usher.twitch.tv/'
 
 _v2_headers = {'ACCEPT': 'application/vnd.twitchtv.v2+json'}
