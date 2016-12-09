@@ -1,0 +1,10 @@
+1.0.0
+- initial release
+- use script.module.requests
+- remove default client_id
+- add oauth token support
+- add authorization, client id headers to all api calls
+- update api.twitch to use https
+- update usher to allow_source
+- videos.by_channel from broadcasts bool to broadcast_type: 'archive', 'highlight', 'upload'
+- update m3u_pattern
