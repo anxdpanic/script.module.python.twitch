@@ -40,7 +40,7 @@ def live(channel):
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.SIG, token[keys.SIG])
     q.add_param(keys.TOKEN, token[keys.TOKEN])
-    q.add_param(keys.ALLOW_SOURCE, Boolean.FALSE)
+    q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     return q
 
 
@@ -55,6 +55,7 @@ def _vod(id):
     q.add_urlkw(keys.ID, id)
     q.add_param(keys.NAUTHSIG, token[keys.SIG])
     q.add_param(keys.NAUTH, token[keys.TOKEN])
+    q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     return q
 
 

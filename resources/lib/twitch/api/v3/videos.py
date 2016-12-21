@@ -28,12 +28,12 @@ def top(limit=10, offset=0, game=None, period=Period.WEEK):
 
 @query
 def by_channel(name, limit=10, offset=0,
-               broadcasts=Boolean.FALSE, hls=Boolean.FALSE):
+               broadcast_type=keys.ARCHIVE, hls=Boolean.FALSE):
     q = Qry('channels/{channel}/videos')
     q.add_urlkw(keys.CHANNEL, name)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
-    q.add_param(keys.BROADCASTS, Boolean.validate(broadcasts), Boolean.FALSE)
+    q.add_param(keys.BROADCAST_TYPE, broadcast_type, keys.ARCHIVE)
     q.add_param(keys.HLS, Boolean.validate(hls), Boolean.FALSE)
     return q
 

@@ -4,7 +4,7 @@ import re
 from twitch.logging import log
 
 _m3u_pattern = re.compile(
-        r'#EXT-X-MEDIA:.*'
+        r'#EXT-X-MEDIA:TYPE=VIDEO.*'
         r'GROUP-ID="(?P<group_id>.\w*)",'
         r'NAME="(?P<group_name>\w*)"[,=\w]*\n'
         r'#EXT-X-STREAM-INF:.*\n('
