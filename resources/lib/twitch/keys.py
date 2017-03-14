@@ -8,6 +8,8 @@
 ALLOW_SOURCE = 'allow_source'
 BROADCASTS = 'broadcasts'
 CHANNEL = 'channel'
+COMMUNITIES = 'communities'
+CURSOR = 'cursor'
 CLIENT_ID = 'client_id'
 DIRECTION = 'direction'
 ERROR = 'error'

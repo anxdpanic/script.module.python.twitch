@@ -13,6 +13,7 @@ _usher_baseurl = 'http://usher.twitch.tv/'
 
 _v2_headers = {'ACCEPT': 'application/vnd.twitchtv.v2+json'}
 _v3_headers = {'ACCEPT': 'application/vnd.twitchtv.v3+json'}
+_v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
 class _Query(object):
@@ -80,7 +81,7 @@ class JsonQuery(_Query):
 
 class ApiQuery(JsonQuery):
     def __init__(self, path, headers={}):
-        headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Client-ID', CLIENT_ID)
         headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(ApiQuery, self).__init__(_kraken_baseurl, headers)
         self.add_path(path)
@@ -100,6 +101,11 @@ class UsherQuery(DownloadQuery):
         headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers)
         self.add_path(path)
+
+
+class V5Query(ApiQuery):
+    def __init__(self, path):
+        super(V5Query, self).__init__(path, _v5_headers)
 
 
 class V3Query(ApiQuery):
