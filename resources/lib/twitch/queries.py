@@ -9,7 +9,7 @@ from twitch.scraper import download, get_json
 
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
-_usher_baseurl = 'http://usher.twitch.tv/'
+_usher_baseurl = 'https://usher.ttvnw.net/'
 
 _v2_headers = {'ACCEPT': 'application/vnd.twitchtv.v2+json'}
 _v3_headers = {'ACCEPT': 'application/vnd.twitchtv.v3+json'}
