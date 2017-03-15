@@ -12,4 +12,5 @@ from twitch.api.v5 import subscriptions  # NOQA
 from twitch.api.v5 import teams  # NOQA
 from twitch.api.v5 import users  # NOQA
 from twitch.api.v5 import videos  # NOQA
+from twitch.api.v5 import communities  # NOQA
 from twitch.api.v5.root import root  # NOQA

@@ -15,8 +15,8 @@ def top(limit=10, cursor=0):
 
 @query
 def by_name(name):
-    q = Qry('communities?name={communities}')
-    q.add_urlkw(keys.COMMUNITIES, name)
+    q = Qry('communities')
+    q.add_param(keys.NAME, name)
     return q
 
 
