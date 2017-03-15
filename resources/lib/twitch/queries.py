@@ -17,9 +17,11 @@ _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
 class _Query(object):
-    def __init__(self, url, headers={}):
+    def __init__(self, url, headers={}, data={}, method='GET'):
         self._headers = headers
+        self._data = data
         self._url = url
+        self._method = method
 
         self._params = dict()
         self._urlkws = dict()
@@ -34,8 +36,16 @@ class _Query(object):
         return self._headers
 
     @property
+    def data(self):
+        return self._data
+
+    @property
     def params(self):
         return self._params
+
+    @property
+    def method(self):
+        return self._method
 
     @property
     def urlkws(self):
@@ -43,6 +53,12 @@ class _Query(object):
 
     def add_path(self, path):
         self._url = urljoin(self._url, path)
+        return self
+
+    def add_data(self, key, value, default=None):
+        assert_new(self._data, key)
+        if value != default:
+            self._data[key] = value
         return self
 
     def add_param(self, key, value, default=None):
@@ -57,12 +73,12 @@ class _Query(object):
         return self
 
     def __str__(self):
-        return 'Query to {url}, params {params}, headers {headers}'.format(
-                url=self.url, params=self.params, headers=self.headers)
+        return '{method} Query to {url}, params {params}, data {data},  headers {headers}'.format(
+                url=self.url, params=self.params, headers=self.headers, data=self.data, method=self.method)
 
     def execute(self, f):
         try:
-            return f(self.url, self.params, self.headers)
+            return f(self.url, self.params, self.headers, self.data, self.method)
         except:
             raise ResourceUnavailableException(str(self))
 
@@ -80,42 +96,42 @@ class JsonQuery(_Query):
 
 
 class ApiQuery(JsonQuery):
-    def __init__(self, path, headers={}):
+    def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-ID', CLIENT_ID)
         headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(ApiQuery, self).__init__(_kraken_baseurl, headers)
+        super(ApiQuery, self).__init__(_kraken_baseurl, headers, data, method)
         self.add_path(path)
 
 
 class HiddenApiQuery(JsonQuery):
-    def __init__(self, path, headers={}):
+    def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-Id', CLIENT_ID)
         headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers)
+        super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
         self.add_path(path)
 
 
 class UsherQuery(DownloadQuery):
-    def __init__(self, path, headers={}):
+    def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-Id', CLIENT_ID)
         headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
-        super(UsherQuery, self).__init__(_usher_baseurl, headers)
+        super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
         self.add_path(path)
 
 
 class V5Query(ApiQuery):
-    def __init__(self, path):
-        super(V5Query, self).__init__(path, _v5_headers)
+    def __init__(self, path, method='GET'):
+        super(V5Query, self).__init__(path, _v5_headers, method=method)
 
 
 class V3Query(ApiQuery):
-    def __init__(self, path):
-        super(V3Query, self).__init__(path, _v3_headers)
+    def __init__(self, path, method='GET'):
+        super(V3Query, self).__init__(path, _v3_headers, method=method)
 
 
 class V2Query(ApiQuery):
-    def __init__(self, path):
-        super(V2Query, self).__init__(path, _v2_headers)
+    def __init__(self, path, method='GET'):
+        super(V2Query, self).__init__(path, _v2_headers, method=method)
 
 
 def assert_new(d, k):
@@ -132,8 +148,8 @@ def query(f):
         if not isinstance(qry, _Query):
             raise ValueError('{} did not return a Query, was: {}'.format(
                              f.__name__, repr(qry)))
-        log.debug('QUERY: url: %s, params: %s, '
+        log.debug('%s QUERY: url: %s, params: %s, data: %s, '
                   'headers: %r, target_func: %r',
-                  qry.url, qry.params, qry.headers, f.__name__)
+                  qry.method, qry.url, qry.params, qry.data, qry.headers, f.__name__)
         return qry.execute()
     return wrapper
