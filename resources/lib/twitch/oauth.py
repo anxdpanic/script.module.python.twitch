@@ -10,8 +10,8 @@ class MobileClient:
 
     def __init__(self, client_id=''):
         self.client_id = client_id if client_id else CLIENT_ID
-        self._client = MobileApplicationClient(client_id=client_id)
-        self.parse_request_uri_response = self._client.parse_request_uri_response
+        self.client = MobileApplicationClient(client_id=client_id)
+        self.parse_request_uri_response = self.client.parse_request_uri_response
 
     def prepare_request_uri(self, redirect_uri='http://localhost:3000/', scope=list()):
-        return self._client.prepare_request_uri(self._auth_base_url, redirect_uri=redirect_uri, scope=scope)
+        return self.client.prepare_request_uri(self._auth_base_url, redirect_uri=redirect_uri, scope=scope)
