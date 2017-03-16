@@ -98,7 +98,8 @@ class JsonQuery(_Query):
 class ApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-ID', CLIENT_ID)
-        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        if OAUTH_TOKEN:
+            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(ApiQuery, self).__init__(_kraken_baseurl, headers, data, method)
         self.add_path(path)
 
@@ -106,7 +107,8 @@ class ApiQuery(JsonQuery):
 class HiddenApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-Id', CLIENT_ID)
-        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        if OAUTH_TOKEN:
+            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
         self.add_path(path)
 
@@ -114,7 +116,8 @@ class HiddenApiQuery(JsonQuery):
 class UsherQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method='GET'):
         headers.setdefault('Client-Id', CLIENT_ID)
-        headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
+        if OAUTH_TOKEN:
+            headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
         self.add_path(path)
 
