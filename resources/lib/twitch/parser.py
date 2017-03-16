@@ -5,8 +5,8 @@ from twitch.logging import log
 
 _m3u_pattern = re.compile(
         r'#EXT-X-MEDIA:TYPE=VIDEO.*'
-        r'GROUP-ID="(?P<group_id>.\w*)",'
-        r'NAME="(?P<group_name>\w*)"[,=\w]*\n'
+        r'GROUP-ID="(?P<group_id>[^"]*)",'
+        r'NAME="(?P<group_name>[^"]*)"[,=\w]*\n'
         r'#EXT-X-STREAM-INF:.*\n('
         r'?P<url>http.*)')
 
@@ -23,5 +23,8 @@ def m3u8_to_dict(string):
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
         d[m.group('group_name')] = m.group('url')
+        if m.group('group_id') == 'chunked':
+            d.update({'Source': m.group('url')})  # ensure Source stream identified for consistency
+
     log.debug('m3u8_to_dict result:\n{}'.format(d))
     return d
