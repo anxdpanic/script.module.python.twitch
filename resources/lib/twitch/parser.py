@@ -23,5 +23,8 @@ def m3u8_to_dict(string):
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
         d[m.group('group_name')] = m.group('url')
+        if m.group('group_id') == 'chunked':
+            d.update({'Source': m.group('url')})  # ensure Source stream identified for consistency
+
     log.debug('m3u8_to_dict result:\n{}'.format(d))
     return d
