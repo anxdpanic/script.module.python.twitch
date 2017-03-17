@@ -13,7 +13,7 @@ _m3u_pattern = re.compile(
 
 def m3u8(f):
     def m3u8_wrapper(*args, **kwargs):
-        return m3u8_to_dict(f(*args, **kwargs))
+        return m3u8_to_list(f(*args, **kwargs))
     return m3u8_wrapper
 
 
@@ -28,3 +28,19 @@ def m3u8_to_dict(string):
 
     log.debug('m3u8_to_dict result:\n{}'.format(d))
     return d
+
+
+def m3u8_to_list(string):
+    log.debug('m3u8_to_list called for:\n{}'.format(string))
+    l = list()
+    matches = re.finditer(_m3u_pattern, string)
+    chunked = None
+    for m in matches:
+        l.append((m.group('group_name'), m.group('url')))
+        if m.group('group_id') == 'chunked':
+            chunked = m.group('url')
+    if (chunked) and (not any(re.match('[Ss]ource', name) for name, url in l)):
+        l.insert(0, ('Source', chunked))
+
+    log.debug('m3u8_to_list result:\n{}'.format(l))
+    return l
