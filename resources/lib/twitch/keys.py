@@ -6,6 +6,7 @@
 """
 
 ALLOW_SOURCE = 'allow_source'
+ALLOW_SPECTRE = 'allow_spectre'
 BROADCAST_TYPE = 'broadcast_type'
 BROADCASTS = 'broadcasts'
 CHANNEL = 'channel'
@@ -28,6 +29,7 @@ MESSAGE = 'message'
 NAME = 'name'
 NAUTH = 'nauth'
 NAUTHSIG = 'nauthsig'
+NEED_HTTPS = 'need_https'
 NOTIFICATION = 'notification'
 OFFSET = 'offset'
 PERIOD = 'period'

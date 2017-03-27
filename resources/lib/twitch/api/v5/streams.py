@@ -8,9 +8,10 @@ from twitch.api.parameters import StreamType
 
 
 @query
-def by_id(channel_id):
+def by_id(channel_id, stream_type=StreamType.LIVE):
     q = Qry('streams/{id}')
     q.add_urlkw(keys.ID, channel_id)
+    q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
     return q
 
 
