@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+# deprecated @ Feb. 14, 2017
+# discontinued @ Feb. 13, 2018
 # https://github.com/justintv/Twitch-API/blob/master/v3_resources/
 
 from twitch.api.v3 import blocks  # NOQA
