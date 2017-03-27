@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+# https://dev.twitch.tv/docs/v5/reference/communities/
 
 from twitch import keys
 from twitch.queries import V5Query as Qry
@@ -21,7 +22,7 @@ def by_name(name):
 
 
 @query
-def by_id(identification):
+def by_id(community_id):
     q = Qry('communities/{id}')
-    q.add_urlkw(keys.ID, identification)
+    q.add_urlkw(keys.ID, community_id)
     return q

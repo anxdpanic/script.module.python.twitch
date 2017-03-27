@@ -4,7 +4,7 @@
 # https://dev.twitch.tv/docs/v3/reference/videos/
 
 from twitch import keys
-from twitch.api.parameters import Boolean, Period
+from twitch.api.parameters import Boolean, BroadcastType, Period
 from twitch.queries import V3Query as Qry
 from twitch.queries import query
 
@@ -12,9 +12,9 @@ from .users import videos
 
 
 @query
-def by_id(identification):
+def by_id(video_id):
     q = Qry('videos/{id}')
-    q.add_urlkw(keys.ID, identification)
+    q.add_urlkw(keys.ID, video_id)
     return q
 
 
@@ -30,12 +30,12 @@ def top(limit=10, offset=0, game=None, period=Period.WEEK):
 
 @query
 def by_channel(name, limit=10, offset=0,
-               broadcast_type=keys.ARCHIVE, hls=Boolean.FALSE):
+               broadcast_type=BroadcastType.ARCHIVE, hls=Boolean.FALSE):
     q = Qry('channels/{channel}/videos')
     q.add_urlkw(keys.CHANNEL, name)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
-    q.add_param(keys.BROADCAST_TYPE, broadcast_type, keys.ARCHIVE)
+    q.add_param(keys.BROADCAST_TYPE, BroadcastType.validate(broadcast_type), BroadcastType.ARCHIVE)
     q.add_param(keys.HLS, Boolean.validate(hls), Boolean.FALSE)
     return q
 

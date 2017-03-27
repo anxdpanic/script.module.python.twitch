@@ -18,16 +18,16 @@ def channel_token(channel):
 
 
 @query
-def vod_token(id):
+def vod_token(video_id):
     q = HiddenApiQuery('vods/{vod}/access_token')
-    q.add_urlkw(keys.VOD, id)
+    q.add_urlkw(keys.VOD, video_id)
     return q
 
 
 @query
-def _legacy_video(id):
+def _legacy_video(video_id):
     q = HiddenApiQuery('videos/{id}')
-    q.add_urlkw(keys.ID, id)
+    q.add_urlkw(keys.ID, video_id)
     return q
 
 
@@ -46,23 +46,26 @@ def live(channel):
 
 @m3u8
 @query
-def _vod(id):
-    id = id[1:]
+def _vod(video_id):
+    video_id = video_id[1:]
 
-    token = vod_token(id)
+    token = vod_token(video_id)
 
     q = UsherQuery('vod/{id}')
-    q.add_urlkw(keys.ID, id)
+    q.add_urlkw(keys.ID, video_id)
     q.add_param(keys.NAUTHSIG, token[keys.SIG])
     q.add_param(keys.NAUTH, token[keys.TOKEN])
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     return q
 
 
-def video(id):
-    if id.startswith('v'):
-        return _vod(id)
-    elif id.startswith(('a', 'c')):
-        return _legacy_video(id)
+def video(video_id):
+    if video_id.startswith('videos'):
+        video_id = 'v' + video_id[6:]
+        return _vod(video_id)
+    elif video_id.startswith('v'):
+        return _vod(video_id)
+    elif video_id.startswith(('a', 'c')):
+        return _legacy_video(video_id)
     else:
         raise NotImplementedError('Unknown Video Type')

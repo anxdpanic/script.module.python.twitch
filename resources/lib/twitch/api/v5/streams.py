@@ -1,24 +1,26 @@
 # -*- encoding: utf-8 -*-
-# https://github.com/justintv/Twitch-API/blob/master/v3_resources/streams.md
+# https://dev.twitch.tv/docs/v5/reference/streams/
 
 from twitch import keys
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
+from twitch.api.parameters import StreamType
 
 
 @query
-def by_channel(identification):
+def by_id(channel_id):
     q = Qry('streams/{id}')
-    q.add_urlkw(keys.ID, identification)
+    q.add_urlkw(keys.ID, channel_id)
     return q
 
 
 @query
-def all(game=None, channel=None, community_id=None, limit=25, offset=0, client_id=None):
+def all(game=None, channel_ids=None, community_id=None, language=None, limit=25, offset=0, client_id=None):
     q = Qry('streams')
     q.add_param(keys.GAME, game)
-    q.add_param(keys.CHANNEL, channel)
+    q.add_param(keys.CHANNEL, channel_ids)
     q.add_param(keys.COMMUNITY_ID, community_id)
+    q.add_param(keys.LANGUAGE, language)
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
     q.add_param(keys.CLIENT_ID, client_id)
@@ -40,6 +42,11 @@ def summary(game=None):
     return q
 
 
+# Needs Authentication
 @query
-def followed():
-    raise NotImplementedError
+def followed(stream_type=StreamType.LIVE, limit=25, offset=0):
+    q = Qry('streams/followed')
+    q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
+    q.add_param(keys.LIMIT, limit, 25)
+    q.add_param(keys.OFFSET, offset, 0)
+    return q

@@ -6,19 +6,19 @@
 from twitch.queries import query
 
 
-# Needs Authentification
+# Needs Authentication
 @query
 def by_name(user):
     raise NotImplementedError
 
 
-# Needs Authentification, needs PUT
+# Needs Authentication, needs PUT
 @query
 def add_block(user, target):
     raise NotImplementedError
 
 
-# Needs Authentification, needs DELETE
+# Needs Authentication, needs DELETE
 @query
 def del_block(user, target):
     raise NotImplementedError

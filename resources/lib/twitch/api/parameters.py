@@ -38,3 +38,19 @@ class SortBy(_Parameter):
     LOGIN = 'login'
 
     _valid = [CREATED_AT, LAST_BROADCAST, LOGIN]
+
+
+class BroadcastType(_Parameter):
+    ARCHIVE = 'archive'
+    HIGHLIGHT = 'highlight'
+    UPLOAD = 'upload'
+
+    _valid = [ARCHIVE, HIGHLIGHT, UPLOAD]
+
+
+class StreamType(_Parameter):
+    LIVE = 'live'
+    PLAYLIST = 'playlist'
+    ALL = 'all'
+
+    _valid = [LIVE, PLAYLIST, ALL]

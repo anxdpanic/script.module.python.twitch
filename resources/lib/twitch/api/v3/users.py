@@ -15,19 +15,19 @@ def by_name(name):
     return q
 
 
-# Needs Authentification
+# Needs Authentication
 @query
 def user():
     raise NotImplementedError
 
 
-# Needs Authentification
+# Needs Authentication
 @query
 def streams():
     raise NotImplementedError
 
 
-# Needs Authentification
+# Needs Authentication
 @query
 def videos():
     raise NotImplementedError

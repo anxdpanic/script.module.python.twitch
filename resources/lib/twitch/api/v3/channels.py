@@ -31,7 +31,7 @@ def editors(name):
     raise NotImplementedError
 
 
-# TODO needs authentification and put requests
+# TODO needs Authentication and put requests
 @query
 def update(name, status=None, game=None, delay=0):
     raise NotImplementedError
