@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # deprecated @ Feb. 14, 2017
 # discontinued @ Feb. 13, 2018
-# https://github.com/justintv/Twitch-API/blob/master/v3_resources/videos.md
+# https://dev.twitch.tv/docs/v3/reference/videos/
 
 from twitch import keys
 from twitch.api.parameters import Boolean, Period
