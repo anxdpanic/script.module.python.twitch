@@ -11,7 +11,6 @@ _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 
-_v2_headers = {'ACCEPT': 'application/vnd.twitchtv.v2+json'}
 _v3_headers = {'ACCEPT': 'application/vnd.twitchtv.v3+json'}
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
@@ -130,11 +129,6 @@ class V5Query(ApiQuery):
 class V3Query(ApiQuery):
     def __init__(self, path, method='GET'):
         super(V3Query, self).__init__(path, _v3_headers, method=method)
-
-
-class V2Query(ApiQuery):
-    def __init__(self, path, method='GET'):
-        super(V2Query, self).__init__(path, _v2_headers, method=method)
 
 
 def assert_new(d, k):
