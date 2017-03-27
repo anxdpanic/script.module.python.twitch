@@ -106,7 +106,7 @@ class ApiQuery(JsonQuery):
 
 class HiddenApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
-        headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Client-ID', CLIENT_ID)
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
@@ -115,7 +115,7 @@ class HiddenApiQuery(JsonQuery):
 
 class UsherQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
-        headers.setdefault('Client-Id', CLIENT_ID)
+        headers.setdefault('Client-ID', CLIENT_ID)
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
