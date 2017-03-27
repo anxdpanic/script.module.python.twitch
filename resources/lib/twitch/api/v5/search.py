@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# https://github.com/justintv/Twitch-API/blob/master/v3_resources/search.md
+# https://dev.twitch.tv/docs/v5/reference/search/
 
 from twitch import keys
 from twitch.api.parameters import Boolean

@@ -6,18 +6,17 @@ from twitch import CLIENT_ID, OAUTH_TOKEN
 from twitch.exceptions import ResourceUnavailableException
 from twitch.logging import log
 from twitch.scraper import download, get_json
+from twitch import methods
 
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 
-_v2_headers = {'ACCEPT': 'application/vnd.twitchtv.v2+json'}
-_v3_headers = {'ACCEPT': 'application/vnd.twitchtv.v3+json'}
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
 class _Query(object):
-    def __init__(self, url, headers={}, data={}, method='GET'):
+    def __init__(self, url, headers={}, data={}, method=methods.GET):
         self._headers = headers
         self._data = data
         self._url = url
@@ -96,7 +95,7 @@ class JsonQuery(_Query):
 
 
 class ApiQuery(JsonQuery):
-    def __init__(self, path, headers={}, data={}, method='GET'):
+    def __init__(self, path, headers={}, data={}, method=methods.GET):
         headers.setdefault('Client-ID', CLIENT_ID)
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
@@ -105,8 +104,8 @@ class ApiQuery(JsonQuery):
 
 
 class HiddenApiQuery(JsonQuery):
-    def __init__(self, path, headers={}, data={}, method='GET'):
-        headers.setdefault('Client-Id', CLIENT_ID)
+    def __init__(self, path, headers={}, data={}, method=methods.GET):
+        headers.setdefault('Client-ID', CLIENT_ID)
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
@@ -114,8 +113,8 @@ class HiddenApiQuery(JsonQuery):
 
 
 class UsherQuery(DownloadQuery):
-    def __init__(self, path, headers={}, data={}, method='GET'):
-        headers.setdefault('Client-Id', CLIENT_ID)
+    def __init__(self, path, headers={}, data={}, method=methods.GET):
+        headers.setdefault('Client-ID', CLIENT_ID)
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
@@ -123,18 +122,8 @@ class UsherQuery(DownloadQuery):
 
 
 class V5Query(ApiQuery):
-    def __init__(self, path, method='GET'):
+    def __init__(self, path, method=methods.GET):
         super(V5Query, self).__init__(path, _v5_headers, method=method)
-
-
-class V3Query(ApiQuery):
-    def __init__(self, path, method='GET'):
-        super(V3Query, self).__init__(path, _v3_headers, method=method)
-
-
-class V2Query(ApiQuery):
-    def __init__(self, path, method='GET'):
-        super(V2Query, self).__init__(path, _v2_headers, method=method)
 
 
 def assert_new(d, k):

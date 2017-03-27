@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
-# https://github.com/justintv/Twitch-API/blob/master/v3_resources/chat.md
+# https://dev.twitch.tv/docs/v5/reference/chat/
 
 from twitch import keys
-from twitch.queries import V3Query as Qry
+from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
 @query
-def by_channel(name):
-    q = Qry('chat/{channel}')
-    q.add_urlkw(keys.CHANNEL, name)
+def emoticons_by_set(emotesets=list()):
+    q = Qry('chat/emoticon_images')
+    q.add_param(keys.EMOTESETS, emotesets, list())
     return q
 
 

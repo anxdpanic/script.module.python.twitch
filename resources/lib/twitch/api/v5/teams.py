@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# https://github.com/justintv/Twitch-API/blob/master/v3_resources/teams.md
+# https://dev.twitch.tv/docs/v5/reference/teams/
 
 from twitch import keys
 from twitch.queries import V5Query as Qry

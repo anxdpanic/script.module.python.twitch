@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="1.0.0~alpha3" provider-name="A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="1.0.0~alpha4" provider-name="A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.six" version="1.9.0"/>
@@ -10,19 +10,6 @@
         <platform>all</platform>
         <news>
 - initial release
-- use script.module.requests
-- remove default client_id
-- add oauth token support
-- add authorization, client id headers to all api calls
-- update api.twitch to use https
-- update usher to allow_source
-- videos.by_channel from broadcasts bool to broadcast_type: 'archive', 'highlight', 'upload'
-- update m3u_pattern
-- add initial v5 (wip)
-- add support for additional methods in queries (PUT/DELETE/POST)
-- v5 add communities, update follow/unfollow/blocks
-- add basics for implicit oauth2
-- update usher base url
         </news>
         <assets>
             <icon>icon.png</icon>
