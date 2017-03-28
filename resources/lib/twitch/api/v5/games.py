@@ -7,7 +7,7 @@ from twitch.queries import query
 
 
 @query
-def top(limit=10, offset=0):
+def get_top_games(limit=10, offset=0):
     q = Qry('games/top')
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)

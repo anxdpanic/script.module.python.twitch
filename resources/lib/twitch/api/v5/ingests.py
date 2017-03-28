@@ -6,6 +6,6 @@ from twitch.queries import query
 
 
 @query
-def get():
+def get_ingest_servers():
     q = Qry('ingests')
     return q
