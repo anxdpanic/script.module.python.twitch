@@ -7,6 +7,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
 def channels(search_query, limit=25, offset=0):
     q = Qry('search/channels')
@@ -16,6 +17,7 @@ def channels(search_query, limit=25, offset=0):
     return q
 
 
+# required scope: none
 @query
 def games(search_query, live=Boolean.FALSE):
     q = Qry('search/games')
@@ -26,6 +28,7 @@ def games(search_query, live=Boolean.FALSE):
     return q
 
 
+# required scope: none
 @query
 def streams(search_query, limit=25, offset=0, hls=Boolean.FALSE):
     q = Qry('search/streams')

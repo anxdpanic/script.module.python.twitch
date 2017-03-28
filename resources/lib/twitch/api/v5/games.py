@@ -6,6 +6,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
 def get_top_games(limit=10, offset=0):
     q = Qry('games/top')

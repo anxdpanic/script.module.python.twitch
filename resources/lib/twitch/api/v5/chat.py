@@ -6,6 +6,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
 def get_emoticons_by_set(emotesets=None):
     q = Qry('chat/emoticon_images')
@@ -13,6 +14,7 @@ def get_emoticons_by_set(emotesets=None):
     return q
 
 
+# required scope: none
 @query
 def get_badges_by_channel(channel_id):
     q = Qry('chat/{channel_id}/badges')
@@ -20,6 +22,7 @@ def get_badges_by_channel(channel_id):
     return q
 
 
+# required scope: none
 @query
 def get_all_emoticons():
     q = Qry('chat/emoticons')

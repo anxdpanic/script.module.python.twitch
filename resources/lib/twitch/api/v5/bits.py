@@ -6,6 +6,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: None
 @query
 def get_cheermotes(channel_id=None):
     q = Qry('bits/actions')

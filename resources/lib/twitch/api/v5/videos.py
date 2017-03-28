@@ -7,6 +7,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
 def get_video(video_id):
     q = Qry('videos/{video_id}')
@@ -14,6 +15,7 @@ def get_video(video_id):
     return q
 
 
+# required scope: none
 @query
 def get_top_videos(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_type=BroadcastType.HIGHLIGHT):
     q = Qry('videos/top')
@@ -25,7 +27,7 @@ def get_top_videos(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_
     return q
 
 
-# Needs Authentication
+# required scope: user_read
 @query
 def get_followed_videos(limit=10, offset=0, broadcast_type=BroadcastType.HIGHLIGHT):
     q = Qry('videos/followed')

@@ -2,19 +2,21 @@
 # https://dev.twitch.tv/docs/v5/reference/streams/
 
 from twitch import keys
+from twitch.api.parameters import StreamType, Language
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
-from twitch.api.parameters import StreamType, Language
 
 
+# required scope: none
 @query
-def get_streams_by_user(channel_id, stream_type=StreamType.LIVE):
-    q = Qry('streams/{id}')
-    q.add_urlkw(keys.ID, channel_id)
+def get_streams_by_id(channel_id, stream_type=StreamType.LIVE):
+    q = Qry('streams/{channel_id}')
+    q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
     return q
 
 
+# required scope: none
 @query
 def get_streams(game=None, channel_ids=None, community_id=None, language=Language.ALL,
                 stream_type=StreamType.LIVE, limit=25, offset=0):
@@ -29,6 +31,7 @@ def get_streams(game=None, channel_ids=None, community_id=None, language=Languag
     return q
 
 
+# required scope: none
 @query
 def get_streams_summary(game=None):
     q = Qry('streams/summary')
@@ -36,6 +39,7 @@ def get_streams_summary(game=None):
     return q
 
 
+# required scope: none
 @query
 def get_featured_streams(limit=25, offset=0):
     q = Qry('streams/featured')
@@ -44,7 +48,7 @@ def get_featured_streams(limit=25, offset=0):
     return q
 
 
-# Needs Authentication
+# required scope: user_read
 @query
 def get_followed_streams(stream_type=StreamType.LIVE, limit=25, offset=0):
     q = Qry('streams/followed')

@@ -7,13 +7,14 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
-# Needs Authentication
+# required scope: user_read
 @query
 def get_user():
     q = Qry('user')
     return q
 
 
+# required scope: none
 @query
 def get_user_by_id(user_id):
     q = Qry('users/{user_id}')
@@ -21,6 +22,7 @@ def get_user_by_id(user_id):
     return q
 
 
+# required scope: user_subscriptions
 @query
 def get_user_emotes(user_id):
     q = Qry('users/{user_id}/emotes')
@@ -28,14 +30,16 @@ def get_user_emotes(user_id):
     return q
 
 
+# required scope: user_subscriptions
 @query
-def check_subscription_by_channel(user_id, channel_id):
+def check_subscription(user_id, channel_id):
     q = Qry('users/{user_id}/subscriptions/{channel_id}')
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
 
+# required scope: none
 @query
 def get_user_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
                      sort_by=SortBy.CREATED_AT):
@@ -48,15 +52,16 @@ def get_user_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
     return q
 
 
+# required scope: none
 @query
-def check_follows_by_channel(user_id, channel_id):
+def check_follows(user_id, channel_id):
     q = Qry('users/{user_id}/follows/channels/{channel_id}')
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
 
 
-# Needs Authentication, needs PUT
+# required scope: user_follows_edit
 @query
 def follow_channel(user_id, channel_id, notifications=Boolean.FALSE):
     q = Qry('users/{user_id}/follows/channels/{channel_id}', method=methods.PUT)
@@ -66,7 +71,7 @@ def follow_channel(user_id, channel_id, notifications=Boolean.FALSE):
     return q
 
 
-# Needs Authentication, needs DELETE
+# required scope: user_follows_edit
 @query
 def unfollow_channel(user_id, channel_id):
     q = Qry('users/{user_id}/follows/channels/{channel_id}', method=methods.DELETE)
@@ -75,7 +80,7 @@ def unfollow_channel(user_id, channel_id):
     return q
 
 
-# Needs Authentication
+# required scope: user_blocks_read
 @query
 def get_user_blocks(user_id, limit=25, offset=0):
     q = Qry('users/{user_id}/blocks')
@@ -85,7 +90,7 @@ def get_user_blocks(user_id, limit=25, offset=0):
     return q
 
 
-# Needs Authentication, needs PUT
+# required scope: user_blocks_edit
 @query
 def block_user(user_id, target_id):
     q = Qry('users/{user_id}/blocks/{target_id}', method=methods.PUT)
@@ -94,7 +99,7 @@ def block_user(user_id, target_id):
     return q
 
 
-# Needs Authentication, needs DELETE
+# required scope: user_blocks_edit
 @query
 def unblock_user(user_id, target_id):
     q = Qry('users/{user_id}/blocks/{target_id}', method=methods.DELETE)
@@ -103,6 +108,7 @@ def unblock_user(user_id, target_id):
     return q
 
 
+# required scope: viewing_activity_read
 @query
 def create_connection_to_vhs(identifier):
     q = Qry('user/vhs', method=methods.PUT)
@@ -110,12 +116,14 @@ def create_connection_to_vhs(identifier):
     return q
 
 
+# required scope: user_read
 @query
 def check_connection_to_vhs():
     q = Qry('user/vhs')
     return q
 
 
+# required scope: viewing_activity_read
 @query
 def delete_connection_to_vhs():
     q = Qry('user/vhs', method=methods.DELETE)

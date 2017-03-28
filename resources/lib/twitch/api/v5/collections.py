@@ -2,11 +2,12 @@
 # https://dev.twitch.tv/docs/v5/reference/collections/
 
 from twitch import keys, methods
+from twitch.api.parameters import Boolean, Cursor
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
-from twitch.api.parameters import Boolean, Cursor
 
 
+# required scope: none
 @query
 def get_collection_metadata(collection_id):
     q = Qry('collections/{collection_id}')
@@ -14,6 +15,7 @@ def get_collection_metadata(collection_id):
     return q
 
 
+# required scope: none
 @query
 def get_collection(collection_id, include_all=Boolean.FALSE):
     q = Qry('collections/{collection_id}/items')
@@ -22,6 +24,7 @@ def get_collection(collection_id, include_all=Boolean.FALSE):
     return q
 
 
+# required scope: none
 @query
 def get_collections(channel_id, limit=10, cursor='MA==', containing_item=None):
     q = Qry('channels/{channel_id}/collections')
@@ -32,6 +35,7 @@ def get_collections(channel_id, limit=10, cursor='MA==', containing_item=None):
     return q
 
 
+# required scope: collections_edit
 @query
 def create_collection(channel_id, title):
     q = Qry('channels/{channel_id}/collections', method=methods.POST)
@@ -40,6 +44,7 @@ def create_collection(channel_id, title):
     return q
 
 
+# required scope: collections_edit
 @query
 def update_collection(collection_id, title):
     q = Qry('collections/{collection_id}', method=methods.PUT)
@@ -48,6 +53,7 @@ def update_collection(collection_id, title):
     return q
 
 
+# required scope: collections_edit
 @query
 def create_collection_thumbnail(collection_id, item_id):
     q = Qry('collections/{collection_id}/thumbnail', method=methods.PUT)
@@ -56,13 +62,15 @@ def create_collection_thumbnail(collection_id, item_id):
     return q
 
 
+# required scope: collections_edit
 @query
-def create_collection(collection_id):
+def delete_collection(collection_id):
     q = Qry('collections/{collection_id}', method=methods.DELETE)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     return q
 
 
+# required scope: collections_edit
 @query
 def add_to_collection(collection_id, video_id):
     q = Qry('collections/{collection_id}/items', method=methods.POST)
@@ -72,6 +80,7 @@ def add_to_collection(collection_id, video_id):
     return q
 
 
+# required scope: collections_edit
 @query
 def delete_from_collection(collection_id, item_id):
     q = Qry('collections/{collection_id}/items/{item_id}', method=methods.DELETE)
@@ -80,6 +89,7 @@ def delete_from_collection(collection_id, item_id):
     return q
 
 
+# required scope: collections_edit
 @query
 def move_in_collection(collection_id, item_id, position):
     q = Qry('collections/{collection_id}/items/{item_id}', method=methods.PUT)

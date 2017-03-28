@@ -7,6 +7,7 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
 def get_community_by_name(name):
     q = Qry('communities')
@@ -14,6 +15,7 @@ def get_community_by_name(name):
     return q
 
 
+# required scope: none
 @query
 def get_community_by_id(community_id):
     q = Qry('communities/{community_id}')
@@ -21,6 +23,7 @@ def get_community_by_id(community_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def update_community(community_id, summary=None, description=None,
                      rules=None, email=None):
@@ -33,6 +36,7 @@ def update_community(community_id, summary=None, description=None,
     return q
 
 
+# required scope: none
 @query
 def get_top_communities(limit=10, cursor='MA=='):
     q = Qry('communities/top')
@@ -41,6 +45,7 @@ def get_top_communities(limit=10, cursor='MA=='):
     return q
 
 
+# required scope: communities_moderate
 @query
 def get_community_bans(community_id, limit=10, cursor='MA=='):
     q = Qry('communities/{community_id}/bans')
@@ -50,6 +55,7 @@ def get_community_bans(community_id, limit=10, cursor='MA=='):
     return q
 
 
+# required scope: communities_moderate
 @query
 def ban_community_user(community_id, user_id):
     q = Qry('communities/{community_id}/bans/{user_id}', method=methods.PUT)
@@ -58,6 +64,7 @@ def ban_community_user(community_id, user_id):
     return q
 
 
+# required scope: communities_moderate
 @query
 def unban_community_user(community_id, user_id):
     q = Qry('communities/{community_id}/bans/{user_id}', method=methods.DELETE)
@@ -66,6 +73,7 @@ def unban_community_user(community_id, user_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def create_community_avatar(community_id, avatar_image):
     q = Qry('communities/{community_id}/images/avatar', method=methods.POST)
@@ -74,6 +82,7 @@ def create_community_avatar(community_id, avatar_image):
     return q
 
 
+# required scope: communities_edit
 @query
 def delete_community_avatar(community_id):
     q = Qry('communities/{community_id}/images/avatar', method=methods.DELETE)
@@ -81,6 +90,7 @@ def delete_community_avatar(community_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def create_community_cover(community_id, cover_image):
     q = Qry('communities/{community_id}/images/cover', method=methods.POST)
@@ -89,6 +99,7 @@ def create_community_cover(community_id, cover_image):
     return q
 
 
+# required scope: communities_edit
 @query
 def delete_community_cover(community_id):
     q = Qry('communities/{community_id}/images/cover', method=methods.DELETE)
@@ -96,6 +107,7 @@ def delete_community_cover(community_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def get_community_moderators(community_id):
     q = Qry('communities/{community_id}/moderators')
@@ -103,6 +115,7 @@ def get_community_moderators(community_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def add_community_moderator(community_id, user_id):
     q = Qry('communities/{community_id}/moderators/{user_id}', method=methods.PUT)
@@ -111,6 +124,7 @@ def add_community_moderator(community_id, user_id):
     return q
 
 
+# required scope: communities_edit
 @query
 def delete_community_moderator(community_id, user_id):
     q = Qry('communities/{community_id}/moderators/{user_id}', method=methods.DELETE)
@@ -119,6 +133,7 @@ def delete_community_moderator(community_id, user_id):
     return q
 
 
+# required scope: any
 @query
 def get_community_permissions(community_id):
     q = Qry('communities/{community_id}/permissions')
@@ -126,6 +141,7 @@ def get_community_permissions(community_id):
     return q
 
 
+# required scope: none
 @query
 def report_community_violation(community_id, channel_id):
     q = Qry('communities/{community_id}/report_channel', method=methods.POST)
@@ -134,6 +150,7 @@ def report_community_violation(community_id, channel_id):
     return q
 
 
+# required scope: communities_moderate
 @query
 def get_community_timeouts(community_id, limit=10, cursor='MA=='):
     q = Qry('communities/{community_id}/timeouts')
@@ -143,6 +160,7 @@ def get_community_timeouts(community_id, limit=10, cursor='MA=='):
     return q
 
 
+# required scope: communities_moderate
 @query
 def add_community_timeout(community_id, user_id, duration=1, reason=None):
     q = Qry('communities/{community_id}/timeouts/{user_id}', method=methods.PUT)
@@ -153,6 +171,7 @@ def add_community_timeout(community_id, user_id, duration=1, reason=None):
     return q
 
 
+# required scope: communities_moderate
 @query
 def delete_community_timeout(community_id, user_id):
     q = Qry('communities/{community_id}/timeouts/{user_id}', method=methods.DELETE)
