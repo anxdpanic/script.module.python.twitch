@@ -7,7 +7,7 @@ from twitch.queries import query
 
 
 @query
-def active(limit=25, offset=0):
+def get_active_teams(limit=25, offset=0):
     q = Qry('teams')
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -15,7 +15,7 @@ def active(limit=25, offset=0):
 
 
 @query
-def by_name(name):
+def get_team(name):
     q = Qry('teams/{team}')
     q.add_urlkw(keys.TEAM, name)
     return q
