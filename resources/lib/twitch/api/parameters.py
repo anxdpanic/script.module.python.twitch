@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from base64 import b64decode
 
 
 class _Parameter(object):
@@ -62,3 +63,13 @@ class StreamType(_Parameter):
     ALL = 'all'
 
     _valid = [LIVE, PLAYLIST, ALL]
+
+
+class Cursor(_Parameter):
+    @classmethod
+    def validate(cls, value):
+        try:
+            decoded = int(b64decode(value))
+            return value
+        except ValueError:
+            raise ValueError(value)

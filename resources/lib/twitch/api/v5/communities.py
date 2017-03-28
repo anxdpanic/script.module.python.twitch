@@ -2,15 +2,16 @@
 # https://dev.twitch.tv/docs/v5/reference/communities/
 
 from twitch import keys
+from twitch.api.parameters import Cursor
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
 @query
-def top(limit=10, cursor=0):
+def top(limit=10, cursor='MA=='):
     q = Qry('communities/top')
     q.add_param(keys.LIMIT, limit, 10)
-    q.add_param(keys.CURSOR, cursor, 0)
+    q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
     return q
 
 

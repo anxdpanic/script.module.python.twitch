@@ -4,7 +4,7 @@
 from twitch import keys
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
-from twitch.api.parameters import Boolean
+from twitch.api.parameters import Boolean, Cursor
 from twitch import methods
 
 
@@ -24,11 +24,11 @@ def get_collection(collection_id, include_all=Boolean.FALSE):
 
 
 @query
-def get_collections(channel_id, limit=10, cursor=0, containing_item=None):
+def get_collections(channel_id, limit=10, cursor='MA==', containing_item=None):
     q = Qry('channels/{channel_id}/collections')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
-    q.add_param(keys.CURSOR, cursor, 0)
+    q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
     q.add_param(keys.CONTAINING_ITEM, containing_item, None)  # 'video:<video_id>'
     return q
 

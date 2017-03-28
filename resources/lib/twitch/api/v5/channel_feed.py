@@ -2,18 +2,18 @@
 # https://dev.twitch.tv/docs/v5/reference/channel-feed/
 
 from twitch import keys
-from twitch.api.parameters import Boolean
+from twitch.api.parameters import Boolean, Cursor
 from twitch import methods
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
 @query
-def get_posts(channel_id, limit=10, cursor=0, comments=5):
+def get_posts(channel_id, limit=10, cursor='MA==', comments=5):
     q = Qry('feed/{channel_id}/posts')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
-    q.add_param(keys.CURSOR, cursor, 0)
+    q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
     q.add_param(keys.COMMENTS, comments, 5)
     return q
 
@@ -63,12 +63,12 @@ def delete_post_reaction(channel_id, post_id, emote_id):
 
 
 @query
-def get_comments(channel_id, post_id, limit=10, cursor=0):
+def get_comments(channel_id, post_id, limit=10, cursor='MA=='):
     q = Qry('feed/{channel_id}/posts/{post_id}/comments')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_urlkw(keys.POST_ID, post_id)
     q.add_param(keys.LIMIT, limit, 10)
-    q.add_param(keys.CURSOR, cursor, 0)
+    q.add_param(keys.CURSOR, Cursor.validate(cursor), 'MA==')
     return q
 
 
