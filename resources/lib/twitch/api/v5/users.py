@@ -9,14 +9,14 @@ from twitch.queries import query
 
 # required scope: user_read
 @query
-def get_user():
+def user():
     q = Qry('user')
     return q
 
 
 # required scope: none
 @query
-def get_user_by_id(user_id):
+def by_id(user_id):
     q = Qry('users/{user_id}')
     q.add_urlkw(keys.USER_ID, user_id)
     return q
@@ -24,7 +24,7 @@ def get_user_by_id(user_id):
 
 # required scope: user_subscriptions
 @query
-def get_user_emotes(user_id):
+def get_emotes(user_id):
     q = Qry('users/{user_id}/emotes')
     q.add_urlkw(keys.USER_ID, user_id)
     return q
@@ -41,8 +41,8 @@ def check_subscription(user_id, channel_id):
 
 # required scope: none
 @query
-def get_user_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
-                     sort_by=SortBy.CREATED_AT):
+def get_follows(user_id, limit=25, offset=0, direction=Direction.DESC,
+                sort_by=SortBy.CREATED_AT):
     q = Qry('users/{user_id}/follows/channels')
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_param(keys.LIMIT, limit, 25)
@@ -82,7 +82,7 @@ def unfollow_channel(user_id, channel_id):
 
 # required scope: user_blocks_read
 @query
-def get_user_blocks(user_id, limit=25, offset=0):
+def get_blocks(user_id, limit=25, offset=0):
     q = Qry('users/{user_id}/blocks')
     q.add_urlkw(keys.USER_ID, user_id)
     q.add_param(keys.LIMIT, limit, 25)

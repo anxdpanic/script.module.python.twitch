@@ -9,14 +9,14 @@ from twitch.queries import query
 
 # required scope: channel_read
 @query
-def get_channel():
+def channel():
     q = Qry('channels')
     return q
 
 
 # required scope: none
 @query
-def get_channel_by_id(channel_id):
+def by_id(channel_id):
     q = Qry('channels/{channel_id}')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -24,7 +24,7 @@ def get_channel_by_id(channel_id):
 
 # required scope: channel_editor
 @query
-def update_channel(channel_id, status=None, game=None, delay=None, channel_feed_enabled=None):
+def update(channel_id, status=None, game=None, delay=None, channel_feed_enabled=None):
     q = Qry('channels/{channel_id}', method=methods.PUT)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     channel = {}
@@ -42,7 +42,7 @@ def update_channel(channel_id, status=None, game=None, delay=None, channel_feed_
 
 # required scope: channel_read
 @query
-def get_channel_editors(channel_id):
+def get_editors(channel_id):
     q = Qry('channels/{channel_id}/editors')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -50,7 +50,7 @@ def get_channel_editors(channel_id):
 
 # required scope: none
 @query
-def get_channel_followers(channel_id, limit=25, offset=0, cursor='MA==', direction=Direction.DESC):
+def get_followers(channel_id, limit=25, offset=0, cursor='MA==', direction=Direction.DESC):
     q = Qry('channels/{channel_id}/follows')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 25)
@@ -62,7 +62,7 @@ def get_channel_followers(channel_id, limit=25, offset=0, cursor='MA==', directi
 
 # required scope: none
 @query
-def get_channel_teams(channel_id):
+def get_teams(channel_id):
     q = Qry('channels/{channel_id}/teams')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -70,7 +70,7 @@ def get_channel_teams(channel_id):
 
 # required scope: channel_subscriptions
 @query
-def get_channel_subscribers(channel_id, limit=25, offset=0, direction=Direction.ASC):
+def get_subscribers(channel_id, limit=25, offset=0, direction=Direction.ASC):
     q = Qry('channels/{channel_id}/subscriptions')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.LIMIT, limit, 25)
@@ -90,10 +90,10 @@ def check_subscription(channel_id, user_id):
 
 # required scope: none
 @query
-def get_channel_videos(channel_id, limit=10, offset=0,
-                       broadcast_type=BroadcastType.HIGHLIGHT,
-                       hls=Boolean.FALSE, sort_by=VideoSort.TIME,
-                       language=Language.ALL):
+def get_videos(channel_id, limit=10, offset=0,
+               broadcast_type=BroadcastType.HIGHLIGHT,
+               hls=Boolean.FALSE, sort_by=VideoSort.TIME,
+               language=Language.ALL):
     q = Qry('channels/{id}/videos')
     q.add_urlkw(keys.ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
@@ -124,7 +124,7 @@ def reset_stream_key(channel_id):
 
 # required scope: channel_editor
 @query
-def get_channel_community(channel_id):
+def get_community(channel_id):
     q = Qry('channels/{channel_id}/community')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -132,7 +132,7 @@ def get_channel_community(channel_id):
 
 # required scope: channel_editor
 @query
-def set_channel_community(channel_id, community_id):
+def set_community(channel_id, community_id):
     q = Qry('channels/{channel_id}/community/{community_id}', method=methods.PUT)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_urlkw(keys.COMMUNITY_ID, community_id)
@@ -141,7 +141,7 @@ def set_channel_community(channel_id, community_id):
 
 # required scope: channel_editor
 @query
-def delete_channel_from_community(channel_id):
+def delete_from_community(channel_id):
     q = Qry('channels/{channel_id}/community', method=methods.DELETE)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q

@@ -7,6 +7,6 @@ from twitch.queries import query
 
 # required scope: none
 @query
-def get_ingest_servers():
+def ingests():
     q = Qry('ingests')
     return q

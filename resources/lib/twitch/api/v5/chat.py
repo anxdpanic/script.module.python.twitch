@@ -16,7 +16,7 @@ def get_emoticons_by_set(emotesets=None):
 
 # required scope: none
 @query
-def get_badges_by_channel(channel_id):
+def get_badges(channel_id):
     q = Qry('chat/{channel_id}/badges')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     return q
@@ -24,6 +24,6 @@ def get_badges_by_channel(channel_id):
 
 # required scope: none
 @query
-def get_all_emoticons():
+def get_emoticons():
     q = Qry('chat/emoticons')
     return q

@@ -9,7 +9,7 @@ from twitch.queries import query
 
 # required scope: none
 @query
-def get_collection_metadata(collection_id):
+def get_metadata(collection_id):
     q = Qry('collections/{collection_id}')
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     return q
@@ -17,7 +17,7 @@ def get_collection_metadata(collection_id):
 
 # required scope: none
 @query
-def get_collection(collection_id, include_all=Boolean.FALSE):
+def by_id(collection_id, include_all=Boolean.FALSE):
     q = Qry('collections/{collection_id}/items')
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     q.add_param(keys.INCLUDE_ALL_ITEMS, Boolean.validate(include_all), Boolean.FALSE)
@@ -37,7 +37,7 @@ def get_collections(channel_id, limit=10, cursor='MA==', containing_item=None):
 
 # required scope: collections_edit
 @query
-def create_collection(channel_id, title):
+def create(channel_id, title):
     q = Qry('channels/{channel_id}/collections', method=methods.POST)
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_data(keys.TITLE, title)
@@ -46,7 +46,7 @@ def create_collection(channel_id, title):
 
 # required scope: collections_edit
 @query
-def update_collection(collection_id, title):
+def update(collection_id, title):
     q = Qry('collections/{collection_id}', method=methods.PUT)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     q.add_data(keys.TITLE, title)
@@ -55,7 +55,7 @@ def update_collection(collection_id, title):
 
 # required scope: collections_edit
 @query
-def create_collection_thumbnail(collection_id, item_id):
+def create_thumbnail(collection_id, item_id):
     q = Qry('collections/{collection_id}/thumbnail', method=methods.PUT)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     q.add_data(keys.ITEM_ID, item_id)
@@ -64,7 +64,7 @@ def create_collection_thumbnail(collection_id, item_id):
 
 # required scope: collections_edit
 @query
-def delete_collection(collection_id):
+def delete(collection_id):
     q = Qry('collections/{collection_id}', method=methods.DELETE)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     return q

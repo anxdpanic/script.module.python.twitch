@@ -9,7 +9,7 @@ from twitch.queries import query
 
 # required scope: none
 @query
-def get_video(video_id):
+def by_id(video_id):
     q = Qry('videos/{video_id}')
     q.add_urlkw(keys.VIDEO_ID, video_id)
     return q
@@ -17,7 +17,7 @@ def get_video(video_id):
 
 # required scope: none
 @query
-def get_top_videos(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_type=BroadcastType.HIGHLIGHT):
+def get_top(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_type=BroadcastType.HIGHLIGHT):
     q = Qry('videos/top')
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
@@ -29,7 +29,7 @@ def get_top_videos(limit=10, offset=0, game=None, period=Period.WEEK, broadcast_
 
 # required scope: user_read
 @query
-def get_followed_videos(limit=10, offset=0, broadcast_type=BroadcastType.HIGHLIGHT):
+def get_followed(limit=10, offset=0, broadcast_type=BroadcastType.HIGHLIGHT):
     q = Qry('videos/followed')
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)

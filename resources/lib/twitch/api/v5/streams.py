@@ -9,7 +9,7 @@ from twitch.queries import query
 
 # required scope: none
 @query
-def get_streams_by_id(channel_id, stream_type=StreamType.LIVE):
+def by_id(channel_id, stream_type=StreamType.LIVE):
     q = Qry('streams/{channel_id}')
     q.add_urlkw(keys.CHANNEL_ID, channel_id)
     q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
@@ -18,8 +18,8 @@ def get_streams_by_id(channel_id, stream_type=StreamType.LIVE):
 
 # required scope: none
 @query
-def get_streams(game=None, channel_ids=None, community_id=None, language=Language.ALL,
-                stream_type=StreamType.LIVE, limit=25, offset=0):
+def get_all(game=None, channel_ids=None, community_id=None, language=Language.ALL,
+            stream_type=StreamType.LIVE, limit=25, offset=0):
     q = Qry('streams')
     q.add_param(keys.GAME, game)
     q.add_param(keys.CHANNEL, channel_ids)
@@ -33,7 +33,7 @@ def get_streams(game=None, channel_ids=None, community_id=None, language=Languag
 
 # required scope: none
 @query
-def get_streams_summary(game=None):
+def get_summary(game=None):
     q = Qry('streams/summary')
     q.add_param(keys.GAME, game)
     return q
@@ -41,7 +41,7 @@ def get_streams_summary(game=None):
 
 # required scope: none
 @query
-def get_featured_streams(limit=25, offset=0):
+def get_featured(limit=25, offset=0):
     q = Qry('streams/featured')
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
@@ -50,7 +50,7 @@ def get_featured_streams(limit=25, offset=0):
 
 # required scope: user_read
 @query
-def get_followed_streams(stream_type=StreamType.LIVE, limit=25, offset=0):
+def get_followed(stream_type=StreamType.LIVE, limit=25, offset=0):
     q = Qry('streams/followed')
     q.add_param(keys.STREAM_TYPE, StreamType.validate(stream_type), StreamType.LIVE)
     q.add_param(keys.LIMIT, limit, 25)
