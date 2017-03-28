@@ -73,11 +73,11 @@ def subscription_status(channel_id, user_id):
 
 @query
 def videos(channel_id, limit=10, offset=0,
-           broadcast_type=BroadcastType.ARCHIVE, hls=Boolean.FALSE):
+           broadcast_type=BroadcastType.HIGHLIGHT, hls=Boolean.FALSE):
     q = Qry('channels/{id}/videos')
     q.add_urlkw(keys.ID, channel_id)
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
-    q.add_param(keys.BROADCAST_TYPE, BroadcastType.validate(broadcast_type), BroadcastType.ARCHIVE)
+    q.add_param(keys.BROADCAST_TYPE, BroadcastType.validate(broadcast_type))
     q.add_param(keys.HLS, Boolean.validate(hls), Boolean.FALSE)
     return q

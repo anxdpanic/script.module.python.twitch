@@ -26,10 +26,9 @@ def top(limit=10, offset=0, game=None, period=Period.WEEK):
 
 # Needs Authentication
 @query
-def followed(limit=10, offset=0,
-             broadcast_type=BroadcastType.ARCHIVE):
+def followed(limit=10, offset=0, broadcast_type=BroadcastType.HIGHLIGHT):
     q = Qry('videos/followed')
     q.add_param(keys.LIMIT, limit, 10)
     q.add_param(keys.OFFSET, offset, 0)
-    q.add_param(keys.BROADCAST_TYPE, BroadcastType.validate(broadcast_type), BroadcastType.ARCHIVE)
+    q.add_param(keys.BROADCAST_TYPE, BroadcastType.validate(broadcast_type))
     return q
