@@ -71,4 +71,5 @@ USER_AGENT = 'User-Agent'
 USER_AGENT_STRING = ('Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) '
                      'Gecko/20100101 Firefox/6.0')
 USER_ID = 'user_id'
+VIDEO_ID = 'video_id'
 VOD = 'vod'
