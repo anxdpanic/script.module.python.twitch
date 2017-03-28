@@ -5,7 +5,6 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
-# TODO token as parameter
 @query
 def root():
     return Qry('')
