@@ -84,8 +84,38 @@ class Cursor(_Parameter):
 
 class Language(_Parameter):
     ALL = 'all'
-    # add twitch supported language codes
-    _valid = [ALL]
+    EN = 'en'
+    DA = 'da'
+    DE = 'de'
+    ES = 'es'
+    FR = 'fr'
+    IT = 'it'
+    HU = 'hu'
+    NL = 'nl'
+    NO = 'no'
+    PL = 'pl'
+    OTHER = 'other'
+    ASL = 'asl'
+    KO = 'ko'
+    JA = 'ja'
+    ZH = 'zh'
+    TH = 'th'
+    AR = 'ar'
+    RU = 'ru'
+    BG = 'bg'
+    EL = 'el'
+    CS = 'cs'
+    TR = 'tr'
+    VI = 'vi'
+    SV = 'sv'
+    FI = 'fi'
+    SK = 'sk'
+    PT = 'pt'
+
+    _valid = [ALL, EN, DA, DE, ES, FR, IT, HU, NL,
+              NO, PL, OTHER, ASL, KO, JA, ZH, TH,
+              AR, RU, BG, EL, CS, TR, VI, SV, FI,
+              SK, PT]
 
     @classmethod
     def validate(cls, value):
