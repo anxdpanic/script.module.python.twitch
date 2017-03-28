@@ -6,14 +6,16 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
-def active(limit=25, offset=0):
+def get_active(limit=25, offset=0):
     q = Qry('teams')
     q.add_param(keys.LIMIT, limit, 25)
     q.add_param(keys.OFFSET, offset, 0)
     return q
 
 
+# required scope: none
 @query
 def by_name(name):
     q = Qry('teams/{team}')

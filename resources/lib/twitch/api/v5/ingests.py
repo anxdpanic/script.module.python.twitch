@@ -5,7 +5,8 @@ from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
+# required scope: none
 @query
-def get():
+def ingests():
     q = Qry('ingests')
     return q
