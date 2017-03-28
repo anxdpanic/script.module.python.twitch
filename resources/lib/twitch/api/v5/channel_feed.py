@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 # https://dev.twitch.tv/docs/v5/reference/channel-feed/
 
-from twitch import keys
+from twitch import keys, methods
 from twitch.api.parameters import Boolean, Cursor
-from twitch import methods
 from twitch.queries import V5Query as Qry
 from twitch.queries import query
 

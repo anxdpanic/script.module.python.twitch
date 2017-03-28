@@ -7,7 +7,7 @@ from twitch.queries import query
 
 
 @query
-def cheermotes(channel_id=None):
+def get_cheermotes(channel_id=None):
     q = Qry('bits/actions')
     q.add_param(keys.CHANNEL_ID, channel_id, None)
     return q
