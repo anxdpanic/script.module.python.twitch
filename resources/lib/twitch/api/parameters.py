@@ -41,6 +41,13 @@ class SortBy(_Parameter):
     _valid = [CREATED_AT, LAST_BROADCAST, LOGIN]
 
 
+class VideoSort(_Parameter):
+    VIEWS = 'views'
+    TIME = 'time'
+
+    _valid = [VIEWS, TIME]
+
+
 class BroadcastType(_Parameter):
     ARCHIVE = 'archive'
     HIGHLIGHT = 'highlight'
@@ -73,3 +80,21 @@ class Cursor(_Parameter):
             return value
         except ValueError:
             raise ValueError(value)
+
+
+class Language(_Parameter):
+    ALL = 'all'
+    # add twitch supported language codes
+    _valid = [ALL]
+
+    @classmethod
+    def validate(cls, value):
+        split_values = value.split(',')
+        for val in split_values:
+            if val not in cls._valid:
+                raise ValueError(value)
+        return value
+
+
+class Duration(_Parameter):
+    _valid = [30, 60, 90, 120, 150, 180]
