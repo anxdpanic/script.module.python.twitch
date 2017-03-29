@@ -72,6 +72,14 @@ class StreamType(_Parameter):
     _valid = [LIVE, PLAYLIST, ALL]
 
 
+class Platform(_Parameter):
+    XBOX_ONE = 'xbox_one'
+    PS4 = 'ps4'
+    ALL = 'all'
+
+    _valid = [XBOX_ONE, PS4, ALL]
+
+
 class Cursor(_Parameter):
     @classmethod
     def validate(cls, value):
