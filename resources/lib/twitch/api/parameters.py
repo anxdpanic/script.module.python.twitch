@@ -76,7 +76,9 @@ class Cursor(_Parameter):
     @classmethod
     def validate(cls, value):
         try:
-            decoded = int(b64decode(value))
+            padding = (4 - len(value) % 4) % 4
+            padding *= '='
+            decoded = b64decode(value + padding)
             return value
         except ValueError:
             raise ValueError(value)
