@@ -19,6 +19,14 @@ class Period(_Parameter):
     _valid = [WEEK, MONTH, ALL]
 
 
+class ClipPeriod(_Parameter):
+    DAY = 'day'
+    WEEK = 'week'
+    MONTH = 'month'
+    ALL = 'all'
+    _valid = [DAY, WEEK, MONTH, ALL]
+
+
 class Boolean(_Parameter):
     TRUE = 'true'
     FALSE = 'false'

@@ -11,7 +11,9 @@ from twitch import methods
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
+_clips_baseurl = 'https://clips.twitch.tv/'
 
+_v4_headers = {'ACCEPT': 'application/vnd.twitchtv.v4+json'}
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
@@ -72,8 +74,8 @@ class _Query(object):
         return self
 
     def __str__(self):
-        return '{method} Query to {url}, params {params}, data {data},  headers {headers}'.format(
-                url=self.url, params=self.params, headers=self.headers, data=self.data, method=self.method)
+        return '{method} Query to {url}, params {params}, data {data},  headers {headers}'\
+            .format(url=self.url, params=self.params, headers=self.headers, data=self.data, method=self.method)
 
     def execute(self, f):
         try:
@@ -121,6 +123,17 @@ class UsherQuery(DownloadQuery):
         self.add_path(path)
 
 
+class ClipsQuery(DownloadQuery):
+    def __init__(self, path, headers={}, data={}, method=methods.GET):
+        super(ClipsQuery, self).__init__(_clips_baseurl, headers, data, method)
+        self.add_path(path)
+
+
+class V4Query(ApiQuery):
+    def __init__(self, path, method=methods.GET):
+        super(V4Query, self).__init__(path, _v4_headers, method=method)
+
+
 class V5Query(ApiQuery):
     def __init__(self, path, method=methods.GET):
         super(V5Query, self).__init__(path, _v5_headers, method=method)
@@ -129,8 +142,7 @@ class V5Query(ApiQuery):
 def assert_new(d, k):
     if k in d:
         v = d.get(k)
-        raise ValueError("Key '{}' already set to '{}'".format(
-                         k, v))
+        raise ValueError("Key '{}' already set to '{}'".format(k, v))
 
 
 # TODO maybe rename
@@ -138,10 +150,10 @@ def query(f):
     def wrapper(*args, **kwargs):
         qry = f(*args, **kwargs)
         if not isinstance(qry, _Query):
-            raise ValueError('{} did not return a Query, was: {}'.format(
-                             f.__name__, repr(qry)))
+            raise ValueError('{} did not return a Query, was: {}'.format(f.__name__, repr(qry)))
         log.debug('%s QUERY: url: %s, params: %s, data: %s, '
                   'headers: %r, target_func: %r',
                   qry.method, qry.url, qry.params, qry.data, qry.headers, f.__name__)
         return qry.execute()
+
     return wrapper
