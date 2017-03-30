@@ -5,6 +5,7 @@ from twitch.api.v5 import bits  # NOQA
 from twitch.api.v5 import channel_feed  # NOQA
 from twitch.api.v5 import channels  # NOQA
 from twitch.api.v5 import chat  # NOQA
+from twitch.api.v4 import clips  # NOQA
 from twitch.api.v5 import collections  # NOQA
 from twitch.api.v5 import communities  # NOQA
 from twitch.api.v5 import games  # NOQA

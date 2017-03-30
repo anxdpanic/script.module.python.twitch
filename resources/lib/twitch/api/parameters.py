@@ -19,6 +19,14 @@ class Period(_Parameter):
     _valid = [WEEK, MONTH, ALL]
 
 
+class ClipPeriod(_Parameter):
+    DAY = 'day'
+    WEEK = 'week'
+    MONTH = 'month'
+    ALL = 'all'
+    _valid = [DAY, WEEK, MONTH, ALL]
+
+
 class Boolean(_Parameter):
     TRUE = 'true'
     FALSE = 'false'
@@ -72,11 +80,21 @@ class StreamType(_Parameter):
     _valid = [LIVE, PLAYLIST, ALL]
 
 
+class Platform(_Parameter):
+    XBOX_ONE = 'xbox_one'
+    PS4 = 'ps4'
+    ALL = 'all'
+
+    _valid = [XBOX_ONE, PS4, ALL]
+
+
 class Cursor(_Parameter):
     @classmethod
     def validate(cls, value):
         try:
-            decoded = int(b64decode(value))
+            padding = (4 - len(value) % 4) % 4
+            padding *= '='
+            decoded = b64decode(value + padding)
             return value
         except ValueError:
             raise ValueError(value)

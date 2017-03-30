@@ -1,12 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-from twitch.logging import log                                          # NOQA
-log.warning('By using this module you are violating the Twitch TOS')    # NOQA
+from twitch.logging import log  # NOQA
+
+log.warning('By using this module you are violating the Twitch TOS')  # NOQA
 
 from twitch import keys
 from twitch.api.parameters import Boolean
-from twitch.parser import m3u8
-from twitch.queries import HiddenApiQuery, UsherQuery
+from twitch.parser import m3u8, clip_embed
+from twitch.queries import ClipsQuery, HiddenApiQuery, UsherQuery
 from twitch.queries import query
 
 
@@ -72,3 +73,11 @@ def video(video_id):
         return _legacy_video(video_id)
     else:
         raise NotImplementedError('Unknown Video Type')
+
+
+@clip_embed
+@query
+def clip(slug):
+    q = ClipsQuery('embed')
+    q.add_param(keys.CLIP, slug)
+    return q
