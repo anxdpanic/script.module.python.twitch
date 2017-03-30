@@ -6,6 +6,10 @@ class _Parameter(object):
     _valid = []
 
     @classmethod
+    def valid(cls):
+        return cls._valid
+
+    @classmethod
     def validate(cls, value):
         if value in cls._valid:
             return value
