@@ -6,7 +6,8 @@ _m3u_pattern = re.compile(
     r'#EXT-X-MEDIA:TYPE=VIDEO.*'
     r'GROUP-ID="(?P<group_id>[^"]*)",'
     r'NAME="(?P<group_name>[^"]*)"[,=\w]*\n'
-    r'#EXT-X-STREAM-INF:.*\n('
+    r'#EXT-X-STREAM-INF:.*'
+    r'BANDWIDTH=(?P<bandwidth>[0-9]+).*\n('
     r'?P<url>http.*)')
 
 _clip_embed_pattern = re.compile(r'quality_options:\s*(?P<qualities>\[[^\]]+?\])')
@@ -45,11 +46,11 @@ def m3u8_to_list(string):
     matches = re.finditer(_m3u_pattern, string)
     chunked = None
     for m in matches:
-        l.append((m.group('group_name'), m.group('url')))
+        l.append((m.group('group_name'), m.group('url'), m.group('bandwidth')))
         if m.group('group_id') == 'chunked':
-            chunked = m.group('url')
-    if (chunked) and (not any(re.match('[Ss]ource', name) for name, url in l)):
-        l.insert(0, ('Source', chunked))
+            chunked = ('Source', m.group('url'), int(m.group('bandwidth')))
+    if (chunked) and (not any(re.match('[Ss]ource', name) for name, url, bandwidth in l)):
+        l.insert(0, chunked)
 
     log.debug('m3u8_to_list result:\n{}'.format(l))
     return l
@@ -61,8 +62,8 @@ def clip_embed_to_list(string):
     l = list()
     if match:
         match = eval(match.group('qualities'))
-        l = [(item['quality'], item['source']) for item in match]
-        l.insert(0, ('Source', l[0][1]))
+        l = [(item['quality'], item['source'], -1) for item in match]
+        l.insert(0, ('Source', l[0][1], -1))
 
     log.debug('clip_embed_to_list result:\n{}'.format(l))
     return l
