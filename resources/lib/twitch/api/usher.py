@@ -34,11 +34,8 @@ def _legacy_video(video_id):
     return q
 
 
-@m3u8
 @query
-def live(channel):
-    token = channel_token(channel)
-
+def _live(channel, token):
     q = UsherQuery('api/channel/hls/{channel}.m3u8')
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.SIG, token[keys.SIG])
@@ -49,12 +46,17 @@ def live(channel):
 
 
 @m3u8
+def live(channel):
+    token = channel_token(channel)
+    if keys.ERROR in token:
+        return token
+    else:
+        return _live(channel, token)
+
+
+@m3u8
 @query
-def _vod(video_id):
-    video_id = video_id[1:]
-
-    token = vod_token(video_id)
-
+def _vod(video_id, token):
     q = UsherQuery('vod/{id}')
     q.add_urlkw(keys.ID, video_id)
     q.add_param(keys.NAUTHSIG, token[keys.SIG])
@@ -64,13 +66,22 @@ def _vod(video_id):
 
 
 def video(video_id):
-    if video_id.startswith('videos'):
-        video_id = 'v' + video_id[6:]
-        return _vod(video_id)
-    elif video_id.startswith('v'):
-        return _vod(video_id)
+    if video_id.startswith('videos') or video_id.startswith('v'):
+        if video_id.startswith('videos'):
+            video_id = 'v' + video_id[6:]
+        video_id = video_id[1:]
+        token = vod_token(video_id)
+        if keys.ERROR in token:
+            return token
+        else:
+            return _vod(video_id, token)
     elif video_id.startswith(('a', 'c')):
-        return _legacy_video(video_id)
+        video_id = video_id[1:]
+        token = vod_token(video_id)
+        if keys.ERROR in token:
+            return token
+        else:
+            return _vod(video_id, token)
     else:
         raise NotImplementedError('Unknown Video Type')
 

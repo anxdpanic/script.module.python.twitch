@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import re
+from twitch import keys
 from twitch.logging import log
 
 _m3u_pattern = re.compile(
@@ -12,10 +13,20 @@ _m3u_pattern = re.compile(
 
 _clip_embed_pattern = re.compile(r'quality_options:\s*(?P<qualities>\[[^\]]+?\])')
 
+_error_pattern = re.compile(r'.*<tr><td><b>error</b></td><td>(?P<message>.+?)</td></tr>.*', re.IGNORECASE)
+
 
 def m3u8(f):
     def m3u8_wrapper(*args, **kwargs):
-        return m3u8_to_list(f(*args, **kwargs))
+        results = f(*args, **kwargs)
+        if keys.ERROR in results:
+            if isinstance(results, dict):
+                return results
+            else:
+                error = re.search(_error_pattern, results)
+                if error:
+                    return {'error': 'Error', 'message': error.group('message'), 'status': 0}
+        return m3u8_to_list(results)
 
     return m3u8_wrapper
 
