@@ -53,8 +53,8 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
             headers.update({USER_AGENT: USER_AGENT_STRING})
             response = requests.request(method=method, url=url, headers=headers, data=data)
             content = response.content
-            if not content and response.status_code == 204:
-                content = '{"status": 204}'
+            if not content:
+                content = '{"status": %d}' % response.status_code
             break
         except Exception as err:
             if not isinstance(err, URLError):

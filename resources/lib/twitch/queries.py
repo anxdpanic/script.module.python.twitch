@@ -12,6 +12,7 @@ _kraken_baseurl = 'https://api.twitch.tv/kraken/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://clips.twitch.tv/'
+_uploads_baseurl = 'https://uploads.twitch.tv/'
 
 _v4_headers = {'ACCEPT': 'application/vnd.twitchtv.v4+json'}
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
@@ -62,6 +63,10 @@ class _Query(object):
             self._data[key] = value
         return self
 
+    def add_bin(self, data):
+        self._data = data
+        return self
+
     def add_param(self, key, value, default=None):
         assert_new(self._params, key)
         if value != default:
@@ -73,8 +78,12 @@ class _Query(object):
         self._urlkws[kw] = replacement
         return self
 
+    def set_headers(self, headers):
+        self._headers = headers
+        return self
+
     def __str__(self):
-        return '{method} Query to {url}, params {params}, data {data},  headers {headers}'\
+        return '{method} Query to {url}, params {params}, data {data},  headers {headers}' \
             .format(url=self.url, params=self.params, headers=self.headers, data=self.data, method=self.method)
 
     def execute(self, f):
@@ -126,6 +135,12 @@ class UsherQuery(DownloadQuery):
 class ClipsQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.GET):
         super(ClipsQuery, self).__init__(_clips_baseurl, headers, data, method)
+        self.add_path(path)
+
+
+class UploadsQuery(DownloadQuery):
+    def __init__(self, path, headers={}, data={}, method=methods.PUT):
+        super(UploadsQuery, self).__init__(_uploads_baseurl, headers, data, method)
         self.add_path(path)
 
 
