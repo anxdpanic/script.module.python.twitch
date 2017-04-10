@@ -25,7 +25,7 @@ def m3u8(f):
             else:
                 error = re.search(_error_pattern, results)
                 if error:
-                    return {'error': 'Error', 'message': error.group('message'), 'status': 0}
+                    return {'error': 'Error', 'message': error.group('message'), 'status': 404}
         return m3u8_to_list(results)
 
     return m3u8_wrapper
