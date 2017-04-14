@@ -13,7 +13,6 @@
         </news>
         <assets>
             <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
         </assets>
         <platform>all</platform>
         <summary lang="en">Module for interaction with the Twitch.tv API</summary>
