@@ -43,10 +43,20 @@ def m3u8_to_dict(string):
     d = dict()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
-        d[m.group('group_name')] = m.group('url')
         if m.group('group_id') == 'chunked':
-            d.update({'Source': m.group('url')})  # ensure Source stream identified for consistency
-
+            d[m.group('group_id')] = {
+                'id': m.group('group_id'),
+                'name': 'Source',
+                'url': m.group('url'),
+                'bandwidth': int(m.group('bandwidth'))
+            }
+        else:
+            d[m.group('group_id')] = {
+                'id': m.group('group_id'),
+                'name': m.group('group_name'),
+                'url': m.group('url'),
+                'bandwidth': int(m.group('bandwidth'))
+            }
     log.debug('m3u8_to_dict result:\n{}'.format(d))
     return d
 
@@ -55,13 +65,21 @@ def m3u8_to_list(string):
     log.debug('m3u8_to_list called for:\n{}'.format(string))
     l = list()
     matches = re.finditer(_m3u_pattern, string)
-    chunked = None
     for m in matches:
-        l.append((m.group('group_name'), m.group('url'), m.group('bandwidth')))
         if m.group('group_id') == 'chunked':
-            chunked = ('Source', m.group('url'), int(m.group('bandwidth')))
-    if (chunked) and (not any(re.match('[Ss]ource', name) for name, url, bandwidth in l)):
-        l.insert(0, chunked)
+            l.insert(0, {
+                'id': m.group('group_id'),
+                'name': 'Source',
+                'url': m.group('url'),
+                'bandwidth': int(m.group('bandwidth'))
+            })
+        else:
+            l.append({
+                'id': m.group('group_id'),
+                'name': m.group('group_name'),
+                'url': m.group('url'),
+                'bandwidth': int(m.group('bandwidth'))
+            })
 
     log.debug('m3u8_to_list result:\n{}'.format(l))
     return l
@@ -73,8 +91,19 @@ def clip_embed_to_list(string):
     l = list()
     if match:
         match = eval(match.group('qualities'))
-        l = [(item['quality'], item['source'], -1) for item in match]
-        l.insert(0, ('Source', l[0][1], -1))
+        l = [{
+                 'id': item['quality'],
+                 'name': item['quality'],
+                 'url': item['source'],
+                 'bandwidth': -1
+             } for item in match]
+        if l:
+            l.insert(0, {
+                'id': 'Source',
+                'name': 'Source',
+                'url': l[0]['url'],
+                'bandwidth': -1
+            })
 
     log.debug('clip_embed_to_list result:\n{}'.format(l))
     return l
