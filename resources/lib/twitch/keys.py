@@ -5,6 +5,7 @@
     string constants
 """
 
+ALLOW_AUDIO_ONLY = 'allow_audio_only'
 ALLOW_SOURCE = 'allow_source'
 ALLOW_SPECTRE = 'allow_spectre'
 AVATAR_IMAGE = 'avatar_image'
