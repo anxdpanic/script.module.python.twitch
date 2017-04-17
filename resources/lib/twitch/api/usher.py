@@ -42,6 +42,7 @@ def _live(channel, token):
     q.add_param(keys.TOKEN, token[keys.TOKEN])
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
+    q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     return q
 
 
@@ -62,6 +63,7 @@ def _vod(video_id, token):
     q.add_param(keys.NAUTHSIG, token[keys.SIG])
     q.add_param(keys.NAUTH, token[keys.TOKEN])
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
+    q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     return q
 
 

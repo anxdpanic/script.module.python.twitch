@@ -43,20 +43,14 @@ def m3u8_to_dict(string):
     d = dict()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
-        if m.group('group_id') == 'chunked':
-            d[m.group('group_id')] = {
-                'id': m.group('group_id'),
-                'name': 'Source',
-                'url': m.group('url'),
-                'bandwidth': int(m.group('bandwidth'))
-            }
-        else:
-            d[m.group('group_id')] = {
-                'id': m.group('group_id'),
-                'name': m.group('group_name'),
-                'url': m.group('url'),
-                'bandwidth': int(m.group('bandwidth'))
-            }
+        name = 'Audio Only' if m.group('group_name') == 'audio_only' else m.group('group_name')
+        name = 'Source' if m.group('group_id') == 'chunked' else name
+        d[m.group('group_id')] = {
+            'id': m.group('group_id'),
+            'name': name,
+            'url': m.group('url'),
+            'bandwidth': int(m.group('bandwidth'))
+        }
     log.debug('m3u8_to_dict result:\n{}'.format(d))
     return d
 
@@ -66,20 +60,14 @@ def m3u8_to_list(string):
     l = list()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
-        if m.group('group_id') == 'chunked':
-            l.insert(0, {
-                'id': m.group('group_id'),
-                'name': 'Source',
-                'url': m.group('url'),
-                'bandwidth': int(m.group('bandwidth'))
-            })
-        else:
-            l.append({
-                'id': m.group('group_id'),
-                'name': m.group('group_name'),
-                'url': m.group('url'),
-                'bandwidth': int(m.group('bandwidth'))
-            })
+        name = 'Audio Only' if m.group('group_name') == 'audio_only' else m.group('group_name')
+        name = 'Source' if m.group('group_id') == 'chunked' else name
+        l.append({
+            'id': m.group('group_id'),
+            'name': name,
+            'url': m.group('url'),
+            'bandwidth': int(m.group('bandwidth'))
+        })
 
     log.debug('m3u8_to_list result:\n{}'.format(l))
     return l
