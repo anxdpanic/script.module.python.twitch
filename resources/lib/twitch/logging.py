@@ -3,8 +3,15 @@ from __future__ import absolute_import
 
 import logging
 
+try:
+    from logging import NullHandler
+except ImportError:
+    class NullHandler(logging.Handler):
+        def emit(self, record):
+            pass
+
 log = logging.getLogger('twitch')
-log.addHandler(logging.NullHandler())
+log.addHandler(NullHandler())
 
 
 def deprecation_warning(logger, old, new):
