@@ -151,7 +151,7 @@ class V5Query(ApiQuery):
 def assert_new(d, k):
     if k in d:
         v = d.get(k)
-        raise ValueError("Key '{}' already set to '{}'".format(k, v))
+        raise ValueError("Key '{0}' already set to '{1}'".format(k, v))
 
 
 # TODO maybe rename
@@ -159,7 +159,7 @@ def query(f):
     def wrapper(*args, **kwargs):
         qry = f(*args, **kwargs)
         if not isinstance(qry, _Query):
-            raise ValueError('{} did not return a Query, was: {}'.format(f.__name__, repr(qry)))
+            raise ValueError('{0} did not return a Query, was: {1}'.format(f.__name__, repr(qry)))
         log.debug('%s QUERY: url: %s, params: %s, data: %s, '
                   'headers: %r, target_func: %r',
                   qry.method, qry.url, qry.params, qry.data, qry.headers, f.__name__)
