@@ -14,7 +14,6 @@ _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://clips.twitch.tv/'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
 
-_v4_headers = {'ACCEPT': 'application/vnd.twitchtv.v4+json'}
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
@@ -142,11 +141,6 @@ class UploadsQuery(DownloadQuery):
     def __init__(self, path, headers={}, data={}, method=methods.PUT):
         super(UploadsQuery, self).__init__(_uploads_baseurl, headers, data, method)
         self.add_path(path)
-
-
-class V4Query(ApiQuery):
-    def __init__(self, path, method=methods.GET):
-        super(V4Query, self).__init__(path, _v4_headers, method=method)
 
 
 class V5Query(ApiQuery):

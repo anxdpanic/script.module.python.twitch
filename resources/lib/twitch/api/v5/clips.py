@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-# https://dev.twitch.tv/docs/v5/guides/clips-discovery/#clips-discovery-api-reference
+# https://dev.twitch.tv/docs/v5/reference/clips/
 
 from twitch import keys
 from twitch.api.parameters import Boolean, ClipPeriod, Cursor
-from twitch.queries import V4Query as Qry
+from twitch.queries import V5Query as Qry
 from twitch.queries import query
 
 
