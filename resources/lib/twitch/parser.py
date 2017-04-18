@@ -39,7 +39,7 @@ def clip_embed(f):
 
 
 def m3u8_to_dict(string):
-    log.debug('m3u8_to_dict called for:\n{}'.format(string))
+    log.debug('m3u8_to_dict called for:\n{0}'.format(string))
     d = dict()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
@@ -51,12 +51,12 @@ def m3u8_to_dict(string):
             'url': m.group('url'),
             'bandwidth': int(m.group('bandwidth'))
         }
-    log.debug('m3u8_to_dict result:\n{}'.format(d))
+    log.debug('m3u8_to_dict result:\n{0}'.format(d))
     return d
 
 
 def m3u8_to_list(string):
-    log.debug('m3u8_to_list called for:\n{}'.format(string))
+    log.debug('m3u8_to_list called for:\n{0}'.format(string))
     l = list()
     matches = re.finditer(_m3u_pattern, string)
     for m in matches:
@@ -69,12 +69,12 @@ def m3u8_to_list(string):
             'bandwidth': int(m.group('bandwidth'))
         })
 
-    log.debug('m3u8_to_list result:\n{}'.format(l))
+    log.debug('m3u8_to_list result:\n{0}'.format(l))
     return l
 
 
 def clip_embed_to_list(string):
-    log.debug('clip_embed_to_list called for:\n{}'.format(string))
+    log.debug('clip_embed_to_list called for:\n{0}'.format(string))
     match = re.search(_clip_embed_pattern, string)
     l = list()
     if match:
@@ -93,5 +93,5 @@ def clip_embed_to_list(string):
                 'bandwidth': -1
             })
 
-    log.debug('clip_embed_to_list result:\n{}'.format(l))
+    log.debug('clip_embed_to_list result:\n{0}'.format(l))
     return l
