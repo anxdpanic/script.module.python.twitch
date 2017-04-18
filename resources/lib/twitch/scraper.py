@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+import sys
 import requests
 # import six
 from six.moves.urllib.error import URLError
@@ -14,6 +15,10 @@ try:
     import json
 except:
     import simplejson as json  # @UnresolvedImport
+
+SSL_VERIFICATION = True
+if sys.version_info <= (2, 7, 9):
+    SSL_VERIFICATION = False
 
 MAX_RETRIES = 5
 
@@ -51,7 +56,7 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
     for _ in range(MAX_RETRIES):
         try:
             headers.update({USER_AGENT: USER_AGENT_STRING})
-            response = requests.request(method=method, url=url, headers=headers, data=data)
+            response = requests.request(method=method, url=url, headers=headers, data=data, verify=SSL_VERIFICATION)
             content = response.content
             if not content:
                 content = '{"status": %d}' % response.status_code
