@@ -29,9 +29,11 @@ def _check_follows(username, name):
 # required scope: none
 # undocumented / unsupported
 @query
-def _get_followed(username):
+def _get_followed(username, limit=25, offset=0):
     q = HQry('users/{username}/follows/games')
     q.add_urlkw(keys.USERNAME, username)
+    q.add_param(keys.LIMIT, limit, 25)
+    q.add_param(keys.OFFSET, offset, 0)
     return q
 
 
