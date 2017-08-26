@@ -1,2 +1,6 @@
+1.0.1
+[fix/upd] offset, limit to games _get_followed
+[fix] omit oauth token for videos by_id
+
 1.0.0
 - initial release

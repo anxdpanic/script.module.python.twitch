@@ -9,7 +9,8 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-- initial release
+[fix/upd] offset, limit to games '_get_followed' queries
+[fix] omit oauth token for videos 'by_id' queries
         </news>
         <assets>
             <icon>icon.png</icon>
