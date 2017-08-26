@@ -12,7 +12,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def by_id(video_id):
-    q = Qry('videos/{video_id}')
+    q = Qry('videos/{video_id}', use_token=False)
     q.add_urlkw(keys.VIDEO_ID, video_id)
     return q
 
