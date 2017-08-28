@@ -1,3 +1,7 @@
+1.0.2
+[fix] omit oauth token for collections 'by_id' queries
+[fix] omit oauth token for collections 'get_collections' queries
+
 1.0.1
 [fix/upd] offset, limit to games _get_followed
 [fix] omit oauth token for videos by_id
