@@ -9,8 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] omit oauth token for collections 'by_id' queries
-[fix] omit oauth token for collections 'get_collections' queries
+[fix] omit oauth token for queries with 'required scope: none'
         </news>
         <assets>
             <icon>icon.png</icon>

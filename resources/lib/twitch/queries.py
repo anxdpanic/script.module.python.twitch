@@ -114,9 +114,9 @@ class ApiQuery(JsonQuery):
 
 
 class HiddenApiQuery(JsonQuery):
-    def __init__(self, path, headers={}, data={}, method=methods.GET):
+    def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
         headers.setdefault('Client-ID', CLIENT_ID)
-        if OAUTH_TOKEN:
+        if use_token and OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(HiddenApiQuery, self).__init__(_hidden_baseurl, headers, data, method)
         self.add_path(path)
