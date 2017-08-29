@@ -10,7 +10,7 @@ from twitch.queries import query
 # required scope: none
 @query
 def get_metadata(collection_id):
-    q = Qry('collections/{collection_id}')
+    q = Qry('collections/{collection_id}', use_token=False)
     q.add_urlkw(keys.COLLECTION_ID, collection_id)
     return q
 
