@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-VERSION = '1.3.0'
+import xbmcaddon
+
+VERSION = xbmcaddon.Addon('script.module.python.twitch').getAddonInfo('version')
 CLIENT_ID = ''
 CLIENT_SECRET = ''
 OAUTH_TOKEN = ''
