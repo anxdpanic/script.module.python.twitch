@@ -84,6 +84,14 @@ class StreamType(_Parameter):
     _valid = [LIVE, PLAYLIST, ALL]
 
 
+class StreamTypes(_Parameter):
+    LIVE = 'live'
+    VODCAST = 'vodcast'
+    ALL = 'all'
+
+    _valid = [LIVE, VODCAST, ALL]
+
+
 class Platform(_Parameter):
     XBOX_ONE = 'xbox_one'
     PS4 = 'ps4'

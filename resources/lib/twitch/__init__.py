@@ -6,3 +6,4 @@ VERSION = xbmcaddon.Addon('script.module.python.twitch').getAddonInfo('version')
 CLIENT_ID = ''
 CLIENT_SECRET = ''
 OAUTH_TOKEN = ''
+APP_TOKEN = ''

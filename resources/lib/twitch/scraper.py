@@ -26,7 +26,7 @@ MAX_RETRIES = 5
 def get_json(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
     '''Download Data from an URL and returns it as JSON
     @param url Url to download from
-    @param parameters Parameter dict to be encoded with url
+    @param parameters Parameter dict to be encoded with url or list of tuple pairs
     @param headers Headers dict to pass with Request
     @param data Request body
     @param method Request method
@@ -39,18 +39,42 @@ def get_json(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
     return jsonDict
 
 
-def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
-    '''Download Data from an url and returns it as a String
-    @param method Request method
-    @param baseurl Url to download from (e.g. http://www.google.com)
-    @param parameters Parameter dict to be encoded with url
+def get_json_and_headers(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
+    '''Download Data from an URL and returns it as JSON
+    @param url Url to download from
+    @param parameters Parameter dict to be encoded with url or list of tuple pairs
     @param headers Headers dict to pass with Request
     @param data Request body
     @param method Request method
-    @returns String of data from URL
+    @returns JSON Object with data and headers from URL {'response': {}, 'headers': {}}
     '''
     method = methods.validate(method)
-    url = '?'.join([baseurl, urlencode(parameters)])
+    content = download(baseurl, parameters, headers, data, method, response_headers=True)
+    content['response'] = json.loads(content['response'])
+    log.debug(json.dumps(content['response'], indent=4, sort_keys=True))
+    return content
+
+
+def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, response_headers=False):
+    '''Download Data from an url and returns it as a String
+    @param method Request method
+    @param baseurl Url to download from (e.g. http://www.google.com)
+    @param parameters Parameter dict to be encoded with url or list of tuple pairs
+    @param headers Headers dict to pass with Request
+    @param data Request body
+    @param method Request method
+    @param response_headers Include response headers in response {'response': {}, 'headers': {}}
+    @returns String of data from URL or {'response': {}, 'headers': {}} if response_headers is True
+    '''
+    method = methods.validate(method)
+    if isinstance(parameters, dict):
+        url = '?'.join([baseurl, urlencode(parameters)])
+    else:
+        _parameters = ''
+        for param in parameters:
+            _parameters += '{0}={1}&'.format(param[0], quote_plus(str(param[1])))
+        _parameters = _parameters.rstrip('&')
+        url = '?'.join([baseurl, _parameters])
     log.debug('Downloading: ' + url)
     content = ""
     for _ in range(MAX_RETRIES):
@@ -68,4 +92,8 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
             log.debug("Error %s during HTTP Request, retrying", repr(err))
     else:
         raise
-    return content
+
+    if not response_headers:
+        return content
+    else:
+        return {'response': content, 'headers': response.headers}
