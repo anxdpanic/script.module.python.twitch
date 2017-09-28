@@ -2,13 +2,14 @@
 
 from six.moves.urllib.parse import urljoin
 
-from twitch import CLIENT_ID, OAUTH_TOKEN
+from twitch import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
 from twitch.exceptions import ResourceUnavailableException
 from twitch.logging import log
-from twitch.scraper import download, get_json
+from twitch.scraper import download, get_json, get_json_and_headers
 from twitch import methods
 
 _kraken_baseurl = 'https://api.twitch.tv/kraken/'
+_helix_baseurl = 'https://api.twitch.tv/helix/'
 _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://clips.twitch.tv/'
@@ -104,6 +105,12 @@ class JsonQuery(_Query):
         return super(JsonQuery, self).execute(get_json)
 
 
+class HelixJsonQuery(_Query):
+    def execute(self):
+        # TODO implement get_json completely here
+        return super(HelixJsonQuery, self).execute(get_json_and_headers)
+
+
 class ApiQuery(JsonQuery):
     def __init__(self, path, headers={}, data={}, use_token=True, method=methods.GET):
         headers.setdefault('Client-ID', CLIENT_ID)
@@ -111,6 +118,29 @@ class ApiQuery(JsonQuery):
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(ApiQuery, self).__init__(_kraken_baseurl, headers, data, method)
         self.add_path(path)
+
+
+class HelixApiQuery(HelixJsonQuery):
+    def __init__(self, path, headers={}, data={}, use_app_token=False, method=methods.GET):
+        headers.setdefault('Client-ID', CLIENT_ID)
+        if use_app_token and APP_TOKEN:
+            headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=APP_TOKEN))
+        elif OAUTH_TOKEN:
+            headers.setdefault('Authorization', 'Bearer {access_token}'.format(access_token=OAUTH_TOKEN))
+        super(HelixApiQuery, self).__init__(_helix_baseurl, headers, data, method)
+        self._params = list()
+        self.add_path(path)
+
+    def add_param(self, key, value, default=None):
+        if value != default:
+            if isinstance(value, list):
+                _params = []
+                for val in value:
+                    _params += [(key, val)]
+                self._params += _params
+            elif (key, value) not in self._params:
+                self._params += [(key, value)]
+        return self
 
 
 class HiddenApiQuery(JsonQuery):
@@ -146,6 +176,11 @@ class UploadsQuery(DownloadQuery):
 class V5Query(ApiQuery):
     def __init__(self, path, use_token=True, method=methods.GET):
         super(V5Query, self).__init__(path, _v5_headers, use_token=use_token, method=method)
+
+
+class HelixQuery(HelixApiQuery):
+    def __init__(self, path, use_app_token=False, method=methods.GET):
+        super(HelixQuery, self).__init__(path, use_app_token=use_app_token, method=method)
 
 
 def assert_new(d, k):
