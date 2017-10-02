@@ -7,6 +7,7 @@
 - twitch.oauth.MobileClient() -> twitch.oauth.clients.MobileClient()
 [add] helix api
 [add] add usher.live_request and usher.video_request
+[add] MobileClient().revoke_token and MobileClient().get_app_access_token queries
 
 1.1.0
 *** Twitch API V5 is deprecated and will be removed entirely on 2/14/18
