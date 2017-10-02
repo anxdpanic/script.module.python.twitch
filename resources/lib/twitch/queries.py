@@ -14,6 +14,7 @@ _hidden_baseurl = 'https://api.twitch.tv/api/'
 _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://clips.twitch.tv/'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
+_oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
 
 _v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
@@ -158,6 +159,12 @@ class UsherQuery(DownloadQuery):
         if OAUTH_TOKEN:
             headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(UsherQuery, self).__init__(_usher_baseurl, headers, data, method)
+        self.add_path(path)
+
+
+class OAuthQuery(JsonQuery):
+    def __init__(self, path, headers={}, data={}, method=methods.GET):
+        super(JsonQuery, self).__init__(_oauth_baseurl, headers, data, method)
         self.add_path(path)
 
 

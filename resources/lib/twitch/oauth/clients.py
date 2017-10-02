@@ -1,42 +1,56 @@
 # -*- encoding: utf-8 -*-
 
-from twitch import CLIENT_ID, CLIENT_SECRET
+from twitch import CLIENT_ID, CLIENT_SECRET, methods
+from twitch.queries import OAuthQuery as Qry
+from twitch.queries import query
 
 from six.moves.urllib_parse import urlsplit, urlencode
 
 
 class MobileClient:
-    _base_url = 'https://api.twitch.tv/kraken/oauth2/{0}'
-
     def __init__(self, client_id='', client_secret=''):
         self.client_id = client_id if client_id else CLIENT_ID
         self.client_secret = client_secret if client_secret else CLIENT_SECRET
 
     def prepare_request_uri(self, redirect_uri='http://localhost:3000/', scope=list(), force_verify=False, state=''):
-        params = {'response_type': 'token',
-                  'client_id': self.client_id,
-                  'redirect_uri': redirect_uri,
-                  'scope': ' '.join(scope),
-                  'force_verify': str(force_verify).lower(),
-                  'state': state}
-        params = urlencode(params)
-        url = '{base_uri}?{params}'.format(base_uri=self._base_url.format('authorize'), params=params)
-        return url
+        q = Qry('authorize')
+        q.add_param('response_type', 'token')
+        q.add_param('client_id', self.client_id)
+        q.add_param('redirect_uri', redirect_uri)
+        q.add_param('scope', ' '.join(scope))
+        q.add_param('force_verify', str(force_verify).lower())
+        q.add_param('state', state)
+        return '?'.join([q.url, urlencode(q.params)])
 
     def prepare_token_uri(self, scope=list()):
-        params = {'client_id': self.client_id,
-                  'client_secret': self.client_secret,
-                  'scope': ' '.join(scope)}
-        params = urlencode(params)
-        url = '{base_uri}?{params}'.format(base_uri=self._base_url.format('token'), params=params)
-        return url
+        q = Qry('token')
+        q.add_param('client_id', self.client_id)
+        q.add_param('client_secret', self.client_secret)
+        q.add_param('grant_type', 'client_credentials')
+        q.add_param('scope', ' '.join(scope))
+        return '?'.join([q.url, urlencode(q.params)])
 
     def prepare_revoke_uri(self, token):
-        params = {'client_id': self.client_id,
-                  'token': token}
-        params = urlencode(params)
-        url = '{base_uri}?{params}'.format(base_uri=self._base_url.format('revoke'), params=params)
-        return url
+        q = Qry('revoke')
+        q.add_param('client_id', self.client_id)
+        q.add_param('token', token)
+        return '?'.join([q.url, urlencode(q.params)])
+
+    @query
+    def revoke_token(self, token):
+        q = Qry('revoke', method=methods.POST)
+        q.add_param('client_id', self.client_id)
+        q.add_param('token', token)
+        return q
+
+    @query
+    def get_app_access_token(self, scope=list()):
+        q = Qry('token', method=methods.POST)
+        q.add_param('client_id', self.client_id)
+        q.add_param('client_secret', self.client_secret)
+        q.add_param('grant_type', 'client_credentials')
+        q.add_param('scope', ' '.join(scope))
+        return q
 
     @staticmethod
     def parse_implicit_response(url):

@@ -12,6 +12,7 @@
 [chg] refactor oauth for inclusion of helix
 [add] helix api
 [add] add usher.live_request and usher.video_request
+[add] MobileClient().revoke_token and MobileClient().get_app_access_token queries
         </news>
         <assets>
             <icon>icon.png</icon>
