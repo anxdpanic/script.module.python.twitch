@@ -4,7 +4,7 @@ from six.moves.urllib.parse import urljoin
 
 from twitch import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
 from twitch.exceptions import ResourceUnavailableException
-from twitch.logging import log
+from twitch.logging import log, prep_log_message
 from twitch.scraper import download, get_json, get_json_and_headers
 from twitch import methods
 
@@ -91,7 +91,7 @@ class _Query(object):
         try:
             return f(self.url, self.params, self.headers, self.data, self.method)
         except:
-            raise ResourceUnavailableException(str(self))
+            raise ResourceUnavailableException(prep_log_message(str(self)))
 
 
 class DownloadQuery(_Query):
@@ -193,7 +193,7 @@ class HelixQuery(HelixApiQuery):
 def assert_new(d, k):
     if k in d:
         v = d.get(k)
-        raise ValueError("Key '{0}' already set to '{1}'".format(k, v))
+        raise ValueError('Key |{0}| already set to |{1}|'.format(k, v))
 
 
 # TODO maybe rename
@@ -201,10 +201,9 @@ def query(f):
     def wrapper(*args, **kwargs):
         qry = f(*args, **kwargs)
         if not isinstance(qry, _Query):
-            raise ValueError('{0} did not return a Query, was: {1}'.format(f.__name__, repr(qry)))
-        log.debug('%s QUERY: url: %s, params: %s, data: %s, '
-                  'headers: %r, target_func: %r',
-                  qry.method, qry.url, qry.params, qry.data, qry.headers, f.__name__)
+            raise ValueError('|{0}| did not return a Query, was: |{1}|'.format(f.__name__, repr(qry)))
+        log.debug('{0} QUERY: url: |{1}|, params: |{2}|, data: |{3}|, headers: |{4}|, target_func: |{5}|'
+                  .format(qry.method, qry.url, qry.params, qry.data, qry.headers, f.__name__))
         return qry.execute()
 
     return wrapper

@@ -35,7 +35,7 @@ def get_json(baseurl, parameters={}, headers={}, data={}, method=methods.GET):
     method = methods.validate(method)
     jsonString = download(baseurl, parameters, headers, data, method)
     jsonDict = json.loads(jsonString)
-    log.debug(json.dumps(jsonDict, indent=4, sort_keys=True))
+    log.debug('url: |{0}| parameters: |{1}|\n{2}'.format(baseurl, parameters, json.dumps(jsonDict, indent=4, sort_keys=True)))
     return jsonDict
 
 
@@ -51,7 +51,7 @@ def get_json_and_headers(baseurl, parameters={}, headers={}, data={}, method=met
     method = methods.validate(method)
     content = download(baseurl, parameters, headers, data, method, response_headers=True)
     content['response'] = json.loads(content['response'])
-    log.debug(json.dumps(content['response'], indent=4, sort_keys=True))
+    log.debug('url: |{0}| parameters: |{1}|\n{2}'.format(baseurl, parameters, json.dumps(content['response'], indent=4, sort_keys=True)))
     return content
 
 
@@ -67,7 +67,10 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
     @returns String of data from URL or {'response': {}, 'headers': {}} if response_headers is True
     '''
     method = methods.validate(method)
-    if isinstance(parameters, dict):
+
+    if not parameters:
+        url = baseurl
+    elif isinstance(parameters, dict):
         url = '?'.join([baseurl, urlencode(parameters)])
     else:
         _parameters = ''
@@ -75,7 +78,8 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
             _parameters += '{0}={1}&'.format(param[0], quote_plus(str(param[1])))
         _parameters = _parameters.rstrip('&')
         url = '?'.join([baseurl, _parameters])
-    log.debug('Downloading: ' + url)
+
+    log.debug('Downloading: |{0}|'.format(url))
     content = ""
     for _ in range(MAX_RETRIES):
         try:
@@ -83,13 +87,13 @@ def download(baseurl, parameters={}, headers={}, data={}, method=methods.GET, re
             response = requests.request(method=method, url=url, headers=headers, data=data, verify=SSL_VERIFICATION)
             content = response.content
             if not content:
-                content = '{"status": %d}' % response.status_code
+                content = '{{"status": {0}}}'.format(response.status_code)
             break
         except Exception as err:
             if not isinstance(err, URLError):
-                log.debug("Error %s during HTTP Request, abort", repr(err))
+                log.debug('Error |{0}| during HTTP Request, abort'.format(repr(err)))
                 raise  # propagate non-URLError
-            log.debug("Error %s during HTTP Request, retrying", repr(err))
+            log.debug('Error |{0}| during HTTP Request, retrying'.format(repr(err)))
     else:
         raise
 

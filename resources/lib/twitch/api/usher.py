@@ -1,14 +1,12 @@
 # -*- encoding: utf-8 -*-
-
-from twitch.logging import log  # NOQA
-
-log.warning('By using this module you are violating the Twitch TOS')  # NOQA
+#  By using this module you are violating the Twitch TOS
 
 from twitch import keys
 from twitch.api.parameters import Boolean
 from twitch.parser import m3u8, clip_embed
 from twitch.queries import ClipsQuery, HiddenApiQuery, UsherQuery
 from twitch.queries import query
+from twitch.logging import log
 
 from six.moves.urllib.parse import urlencode
 
@@ -57,7 +55,9 @@ def live_request(channel):
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
         url = '?'.join([q.url, urlencode(q.params)])
-        return {'url': url, 'headers': q.headers}
+        request_dict = {'url': url, 'headers': q.headers}
+        log.debug('live_request: |{0}|'.format(str(request_dict)))
+        return request_dict
 
 
 @query
@@ -95,7 +95,9 @@ def video_request(video_id):
             q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
             q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
             url = '?'.join([q.url, urlencode(q.params)])
-            return {'url': url, 'headers': q.headers}
+            request_dict = {'url': url, 'headers': q.headers}
+            log.debug('video_request: |{0}|'.format(str(request_dict)))
+            return request_dict
     else:
         raise NotImplementedError('Unknown Video Type')
 
