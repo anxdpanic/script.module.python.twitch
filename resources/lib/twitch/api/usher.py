@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 #  By using this module you are violating the Twitch TOS
 
-from twitch import keys
-from twitch.api.parameters import Boolean
-from twitch.parser import m3u8, clip_embed
-from twitch.queries import ClipsQuery, HiddenApiQuery, UsherQuery
-from twitch.queries import query
-from twitch.logging import log
+from .. import keys
+from ..api.parameters import Boolean
+from ..parser import m3u8, clip_embed
+from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery
+from ..queries import query
+from ..log import log
 
 from six.moves.urllib.parse import urlencode
 

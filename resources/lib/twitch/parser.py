@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import re
-from twitch import keys
-from twitch.logging import log
+from . import keys
+from .log import log
 
 _m3u_pattern = re.compile(
     r'#EXT-X-MEDIA:TYPE=VIDEO.*'
