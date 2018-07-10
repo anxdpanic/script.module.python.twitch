@@ -9,6 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
+[fix] clips usher
 [chg] to relative imports
 [upd] deprecation/removal dates
         </news>

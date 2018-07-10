@@ -129,6 +129,6 @@ def video(video_id):
 @clip_embed
 @query
 def clip(slug):
-    q = ClipsQuery('embed')
-    q.add_param(keys.CLIP, slug)
+    q = ClipsQuery('api/v2/clips/{clip}/status')
+    q.add_urlkw(keys.CLIP, slug)
     return q
