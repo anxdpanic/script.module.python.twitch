@@ -21,5 +21,6 @@
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
         <forum> </forum>
         <source>https://github.com/MrSprigster/script.module.python.twitch</source>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
 </addon>
