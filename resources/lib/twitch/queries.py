@@ -2,6 +2,8 @@
 
 from six.moves.urllib.parse import urljoin
 
+from copy import deepcopy
+
 from . import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
 from .exceptions import ResourceUnavailableException
 from .log import log, prep_log_message
@@ -182,7 +184,7 @@ class UploadsQuery(DownloadQuery):
 
 class V5Query(ApiQuery):
     def __init__(self, path, use_token=True, method=methods.GET):
-        super(V5Query, self).__init__(path, _v5_headers, use_token=use_token, method=method)
+        super(V5Query, self).__init__(path, deepcopy(_v5_headers), use_token=use_token, method=method)
 
 
 class HelixQuery(HelixApiQuery):
