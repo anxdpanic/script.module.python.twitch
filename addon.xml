@@ -9,9 +9,8 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] clips usher
-[chg] to relative imports
-[upd] deprecation/removal dates
+[fix] Python 3 compat.
+[add] fast_bread param to usher
         </news>
         <assets>
             <icon>icon.png</icon>
