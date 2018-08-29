@@ -11,6 +11,7 @@
         <news>
 [fix] Python 3 compat.
 [add] fast_bread param to usher
+[add/upd] helix endpoints
         </news>
         <assets>
             <icon>icon.png</icon>
