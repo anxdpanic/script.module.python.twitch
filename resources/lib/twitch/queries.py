@@ -2,8 +2,6 @@
 
 from six.moves.urllib.parse import urljoin
 
-from copy import deepcopy
-
 from . import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
 from .exceptions import ResourceUnavailableException
 from .log import log, prep_log_message
@@ -17,8 +15,6 @@ _usher_baseurl = 'https://usher.ttvnw.net/'
 _clips_baseurl = 'https://clips.twitch.tv/'
 _uploads_baseurl = 'https://uploads.twitch.tv/'
 _oauth_baseurl = 'https://api.twitch.tv/kraken/oauth2/'
-
-_v5_headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
 
 
 class _Query(object):
@@ -184,7 +180,8 @@ class UploadsQuery(DownloadQuery):
 
 class V5Query(ApiQuery):
     def __init__(self, path, use_token=True, method=methods.GET):
-        super(V5Query, self).__init__(path, deepcopy(_v5_headers), use_token=use_token, method=method)
+        headers = {'ACCEPT': 'application/vnd.twitchtv.v5+json'}
+        super(V5Query, self).__init__(path, headers, use_token=use_token, method=method)
 
 
 class HelixQuery(HelixApiQuery):
