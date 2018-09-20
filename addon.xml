@@ -9,9 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] Python 3 compat.
-[add] fast_bread param to usher
-[add/upd] helix endpoints
+[chg] redact user ip from token logging
         </news>
         <assets>
             <icon>icon.png</icon>
