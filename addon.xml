@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[chg] redact user ip from token logging
+[fix] video/live stream token encoding
         </news>
         <assets>
             <icon>icon.png</icon>
