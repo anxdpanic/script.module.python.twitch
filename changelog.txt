@@ -1,3 +1,6 @@
+2.0.5
+[upd] use SPDX license identifiers
+
 2.0.4
 [fix] video/live stream token encoding
 
