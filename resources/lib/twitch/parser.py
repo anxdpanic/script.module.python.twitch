@@ -21,6 +21,7 @@ _m3u_pattern = re.compile(
     r'NAME="(?P<group_name>[^"]*)"[,=\w]*\n'
     r'#EXT-X-STREAM-INF:.*'
     r'BANDWIDTH=(?P<bandwidth>[0-9]+),'
+    r'(?:.*RESOLUTION="*(?P<resolution>[0-9xX]+)"*,)?'
     r'(?:.*FRAME-RATE=(?P<fps>[0-9.]+))?.*\n'
     r'(?P<url>http.*)')
 
@@ -89,7 +90,8 @@ def m3u8_to_dict(string):
             'name': name,
             'url': m.group('url'),
             'bandwidth': int(m.group('bandwidth')),
-            'fps': fps
+            'fps': fps,
+            'resolution': m.group('resolution')
         }
     log.debug('m3u8_to_dict result:\n{0}'.format(d))
     return d
@@ -117,7 +119,8 @@ def m3u8_to_list(string):
             'name': name,
             'url': m.group('url'),
             'bandwidth': int(m.group('bandwidth')),
-            'fps': fps
+            'fps': fps,
+            'resolution': m.group('resolution')
         })
 
     log.debug('m3u8_to_list result:\n{0}'.format(l))
