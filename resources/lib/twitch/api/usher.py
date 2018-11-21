@@ -34,6 +34,8 @@ def channel_token(channel):
     q = HiddenApiQuery('channels/{channel}/access_token')
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
+    q.add_param(keys.PLATFORM, keys.WEB)
+    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
     return q
 
 
@@ -42,6 +44,8 @@ def vod_token(video_id):
     q = HiddenApiQuery('vods/{vod}/access_token')
     q.add_urlkw(keys.VOD, video_id)
     q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
+    q.add_param(keys.PLATFORM, keys.WEB)
+    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
     return q
 
 
@@ -65,6 +69,10 @@ def live_request(channel):
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
         q.add_param(keys.FAST_BREAD, Boolean.TRUE)
+        q.add_param(keys.CDM, keys.WV)
+        q.add_param(keys.REASSIGNMENT_SUPPORTED, Boolean.TRUE)
+        q.add_param(keys.RTQOS, keys.CONTROL)
+        q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
         url = '?'.join([q.url, urlencode(q.params)])
         request_dict = {'url': url, 'headers': q.headers}
         log.debug('live_request: |{0}|'.format(str(request_dict)))
@@ -81,6 +89,10 @@ def _live(channel, token):
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     q.add_param(keys.FAST_BREAD, Boolean.TRUE)
+    q.add_param(keys.CDM, keys.WV)
+    q.add_param(keys.REASSIGNMENT_SUPPORTED, Boolean.TRUE)
+    q.add_param(keys.RTQOS, keys.CONTROL)
+    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
     return q
 
 
@@ -106,6 +118,13 @@ def video_request(video_id):
             q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
             q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
             q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
+            q.add_param(keys.CDM, keys.WV)
+            q.add_param(keys.REASSIGNMENT_SUPPORTED, Boolean.TRUE)
+            q.add_param(keys.RTQOS, keys.CONTROL)
+            q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+            q.add_param(keys.BAKING_BREAD, Boolean.TRUE)
+            q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
+            q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
             url = '?'.join([q.url, urlencode(q.params)])
             request_dict = {'url': url, 'headers': q.headers}
             log.debug('video_request: |{0}|'.format(str(request_dict)))
@@ -122,6 +141,13 @@ def _vod(video_id, token):
     q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
+    q.add_param(keys.CDM, keys.WV)
+    q.add_param(keys.REASSIGNMENT_SUPPORTED, Boolean.TRUE)
+    q.add_param(keys.RTQOS, keys.CONTROL)
+    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    q.add_param(keys.BAKING_BREAD, Boolean.TRUE)
+    q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
+    q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
     return q
 
 
