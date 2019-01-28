@@ -9,9 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[add] add frame rate and resolution to returned stream information
-[upd] update usher parameters
-[upd] use SPDX license identifiers
+[travis] testing
         </news>
         <assets>
             <icon>icon.png</icon>
