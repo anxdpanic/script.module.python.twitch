@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[add] add missing helix api endpoints
+[add] add platform parameter to usher
         </news>
         <assets>
             <icon>icon.png</icon>
