@@ -9,7 +9,8 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[upd] Mark communities endpoints and queries as deprecated
+[fix] decode byte responses in scraper
+[fix] usher/parser error handling
         </news>
         <assets>
             <icon>icon.png</icon>
