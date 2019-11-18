@@ -1,4 +1,5 @@
 2.0.9
+[upd] allow overriding headers for usher and hidden api calls
 [fix] decode byte responses in scraper
 [fix] usher/parser error handling
 

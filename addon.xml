@@ -9,6 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
+[upd] allow overriding headers for usher and hidden api calls
 [fix] decode byte responses in scraper
 [fix] usher/parser error handling
         </news>
