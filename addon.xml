@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] Python 3 - don't decode string when processing clips
+[fix] clip usher
         </news>
         <assets>
             <icon>icon.png</icon>
