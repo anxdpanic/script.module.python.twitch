@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] clip usher
+[fix] stream language
         </news>
         <assets>
             <icon>icon.png</icon>
