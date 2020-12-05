@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[upd] Update material to reflect repository changes
+[chg] change followed, following, and unfollowing games to use gql endpoints
         </news>
         <assets>
             <icon>icon.png</icon>
