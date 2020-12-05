@@ -1,3 +1,6 @@
+2.0.16
+[chg] change followed, following, and unfollowing games to use gql endpoints
+
 2.0.15
 [upd] Update material to reflect repository changes
 
