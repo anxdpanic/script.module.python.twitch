@@ -19,7 +19,7 @@
         <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
         <license>GPL-3.0-only</license>
         <source>https://github.com/anxdpanic/script.module.python.twitch</source>
-        <forum>https://twitchaddon.page.link/forum</forum>
+        <forum>https://twitchaddon.panicked.xyz/forum</forum>
         <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
 </addon>
