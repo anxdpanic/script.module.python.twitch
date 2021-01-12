@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.16~beta1" provider-name="anxdpanic, A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.16~beta2" provider-name="anxdpanic, A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.11.0"/>
@@ -9,6 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
+[fix] playback, change access token to use gql endpoints
 [chg] change followed, following, and unfollowing games to use gql endpoints
         </news>
         <assets>

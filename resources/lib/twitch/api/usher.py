@@ -16,7 +16,7 @@ import json
 from .. import keys
 from ..api.parameters import Boolean
 from ..parser import m3u8, clip_embed
-from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery
+from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery, GQLQuery
 from ..queries import query
 from ..log import log
 
@@ -33,21 +33,35 @@ def valid_video_id(video_id):
 
 @query
 def channel_token(channel, platform=keys.WEB, headers={}):
-    q = HiddenApiQuery('channels/{channel}/access_token', headers=headers)
-    q.add_urlkw(keys.CHANNEL, channel)
-    q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, platform)
-    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    data = [{
+        "operationName": "PlaybackAccessToken_Template",
+        "query": "query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}",
+        "variables": {
+            "isLive": True,
+            "login": channel,
+            "isVod": False,
+            "vodID": "",
+            "playerType": "site"
+        }
+    }]
+    q = GQLQuery('', headers=headers, data=data, use_token=True)
     return q
 
 
 @query
 def vod_token(video_id, platform=keys.WEB, headers={}):
-    q = HiddenApiQuery('vods/{vod}/access_token', headers=headers)
-    q.add_urlkw(keys.VOD, video_id)
-    q.add_param(keys.NEED_HTTPS, Boolean.TRUE)
-    q.add_param(keys.PLATFORM, platform)
-    q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    data = [{
+        "operationName": "PlaybackAccessToken_Template",
+        "query": "query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: \"web\", playerBackend: \"mediaplayer\", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}",
+        "variables": {
+            "isLive": False,
+            "login": "",
+            "isVod": True,
+            "vodID": video_id,
+            "playerType": "site"
+        }
+    }]
+    q = GQLQuery('', headers=headers, data=data, use_token=True)
     return q
 
 
@@ -63,10 +77,13 @@ def live_request(channel, platform=keys.WEB, headers={}):
     if keys.ERROR in token:
         return token
     else:
+        token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+        signature = token[keys.SIGNATURE]
+        access_token = token[keys.VALUE]
         q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
         q.add_urlkw(keys.CHANNEL, channel)
-        q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
-        q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
+        q.add_param(keys.SIG, signature.encode('utf-8'))
+        q.add_param(keys.TOKEN, access_token.encode('utf-8'))
         q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
         q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
         q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -84,10 +101,13 @@ def live_request(channel, platform=keys.WEB, headers={}):
 
 @query
 def _live(channel, token, headers={}):
+    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+    signature = token[keys.SIGNATURE]
+    access_token = token[keys.VALUE]
     q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
     q.add_urlkw(keys.CHANNEL, channel)
-    q.add_param(keys.SIG, token[keys.SIG].encode('utf-8'))
-    q.add_param(keys.TOKEN, token[keys.TOKEN].encode('utf-8'))
+    q.add_param(keys.SIG, signature.encode('utf-8'))
+    q.add_param(keys.TOKEN, access_token.encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_SPECTRE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
@@ -116,10 +136,13 @@ def video_request(video_id, platform=keys.WEB, headers={}):
         if keys.ERROR in token:
             return token
         else:
+            token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+            signature = token[keys.SIGNATURE]
+            access_token = token[keys.VALUE]
             q = UsherQuery('vod/{id}', headers=headers)
             q.add_urlkw(keys.ID, video_id)
-            q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
-            q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
+            q.add_param(keys.NAUTHSIG, signature.encode('utf-8'))
+            q.add_param(keys.NAUTH, access_token.encode('utf-8'))
             q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
             q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
             q.add_param(keys.CDM, keys.WV)
@@ -140,10 +163,13 @@ def video_request(video_id, platform=keys.WEB, headers={}):
 
 @query
 def _vod(video_id, token, headers={}):
+    token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+    signature = token[keys.SIGNATURE]
+    access_token = token[keys.VALUE]
     q = UsherQuery('vod/{id}', headers=headers)
     q.add_urlkw(keys.ID, video_id)
-    q.add_param(keys.NAUTHSIG, token[keys.SIG].encode('utf-8'))
-    q.add_param(keys.NAUTH, token[keys.TOKEN].encode('utf-8'))
+    q.add_param(keys.NAUTHSIG, signature.encode('utf-8'))
+    q.add_param(keys.NAUTH, access_token.encode('utf-8'))
     q.add_param(keys.ALLOW_SOURCE, Boolean.TRUE)
     q.add_param(keys.ALLOW_AUDIO_ONLY, Boolean.TRUE)
     q.add_param(keys.CDM, keys.WV)
