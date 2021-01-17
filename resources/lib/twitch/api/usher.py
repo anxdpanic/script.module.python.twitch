@@ -22,6 +22,12 @@ from ..log import log
 
 from six.moves.urllib.parse import urlencode
 
+ACCESS_TOKEN_EXCEPTION = {
+    'error': 'Error',
+    'message': 'Failed to retrieve access token',
+    'status': 404
+}
+
 
 def valid_video_id(video_id):
     if video_id.startswith('videos'):
@@ -74,10 +80,11 @@ def _legacy_video(video_id):
 
 def live_request(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    if keys.ERROR in token:
-        return token
+    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+
+    if not token:
+        return ACCESS_TOKEN_EXCEPTION
     else:
-        token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
         signature = token[keys.SIGNATURE]
         access_token = token[keys.VALUE]
         q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
@@ -94,16 +101,19 @@ def live_request(channel, platform=keys.WEB, headers={}):
         q.add_param(keys.RTQOS, keys.CONTROL)
         q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
         url = '?'.join([q.url, urlencode(q.params)])
-        request_dict = {'url': url, 'headers': q.headers}
+        request_dict = {
+            'url': url,
+            'headers': q.headers
+        }
         log.debug('live_request: |{0}|'.format(str(request_dict)))
         return request_dict
 
 
 @query
 def _live(channel, token, headers={}):
-    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
     signature = token[keys.SIGNATURE]
     access_token = token[keys.VALUE]
+
     q = UsherQuery('api/channel/hls/{channel}.m3u8', headers=headers)
     q.add_urlkw(keys.CHANNEL, channel)
     q.add_param(keys.SIG, signature.encode('utf-8'))
@@ -123,8 +133,9 @@ def _live(channel, token, headers={}):
 @m3u8
 def live(channel, platform=keys.WEB, headers={}):
     token = channel_token(channel, platform=platform, headers=headers)
-    if keys.ERROR in token:
-        return token
+    token = token[0][keys.DATA][keys.STREAM_PLAYBACK_ACCESS_TOKEN]
+    if not token:
+        return ACCESS_TOKEN_EXCEPTION
     else:
         return _live(channel, token, headers=headers)
 
@@ -133,10 +144,11 @@ def video_request(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        if keys.ERROR in token:
-            return token
+        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+
+        if not token:
+            return ACCESS_TOKEN_EXCEPTION
         else:
-            token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
             signature = token[keys.SIGNATURE]
             access_token = token[keys.VALUE]
             q = UsherQuery('vod/{id}', headers=headers)
@@ -154,7 +166,10 @@ def video_request(video_id, platform=keys.WEB, headers={}):
             q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
             q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
             url = '?'.join([q.url, urlencode(q.params)])
-            request_dict = {'url': url, 'headers': q.headers}
+            request_dict = {
+                'url': url,
+                'headers': q.headers
+            }
             log.debug('video_request: |{0}|'.format(str(request_dict)))
             return request_dict
     else:
@@ -163,9 +178,9 @@ def video_request(video_id, platform=keys.WEB, headers={}):
 
 @query
 def _vod(video_id, token, headers={}):
-    token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
     signature = token[keys.SIGNATURE]
     access_token = token[keys.VALUE]
+
     q = UsherQuery('vod/{id}', headers=headers)
     q.add_urlkw(keys.ID, video_id)
     q.add_param(keys.NAUTHSIG, signature.encode('utf-8'))
@@ -188,8 +203,10 @@ def video(video_id, platform=keys.WEB, headers={}):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
-        if keys.ERROR in token:
-            return token
+        token = token[0][keys.DATA][keys.VIDEO_PLAYBACK_ACCESS_TOKEN]
+
+        if not token:
+            return ACCESS_TOKEN_EXCEPTION
         else:
             return _vod(video_id, token, headers=headers)
     else:
