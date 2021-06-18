@@ -9,6 +9,8 @@ on:
 
 jobs:
   addon-validations:
+    if: github.repository == 'anxdpanic/script.module.python.twitch'
+
     runs-on: ubuntu-latest
     name: Add-on Validations
 
