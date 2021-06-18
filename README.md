@@ -10,7 +10,7 @@
 python-twitch for Kodi is module for interaction with the Twitch.tv API
 
 #### Usage:
-Example can be found [anxdpanic/Twitch-on-Kodi/master/resources/lib/twitch_addon/addon/api.py](https://github.com/anxdpanic/Twitch-on-Kodi/blob/master/resources/lib/twitch_addon/addon/api.py)
+Example can be found [anxdpanic/plugin.video.twitch/master/resources/lib/twitch_addon/addon/api.py](https://github.com/anxdpanic/Twitch-on-Kodi/blob/master/resources/lib/twitch_addon/addon/api.py)
 
 #### API Documentation:
 https://dev.twitch.tv/docs
