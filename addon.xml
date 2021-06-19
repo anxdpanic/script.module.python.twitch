@@ -9,8 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] playback, change access token to use gql endpoints
-[chg] change followed, following, and unfollowing games to use gql endpoints
+[fix] playback of clips
         </news>
         <assets>
             <icon>icon.png</icon>
