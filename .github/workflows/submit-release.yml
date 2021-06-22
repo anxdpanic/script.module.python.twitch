@@ -43,7 +43,10 @@ jobs:
         run: |
           mv .git ..
           rm -rf .??*
+          mv ../.git .
           rm *.md
+          git add .
+          git commit -m "Remove unwanted files"
         working-directory: ${{ github.event.repository.name }}
 
       - name: Submit to Official Repository (Isengard)

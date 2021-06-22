@@ -31,10 +31,15 @@ jobs:
         run: |
           kodi-addon-checker ${{ github.event.repository.name }} --branch=isengard
 
-      - name: Kodi Add-on Checker (Matrix)
-        id: kodi-addon-checker-matrix
+      - name: Staging for Official Repository (Matrix)
+        id: stage-matrix
         run: |
           xmlstarlet ed -L -u '//import[@addon="xbmc.python"]/@version' -v "3.0.0" addon.xml
           version=$(xmlstarlet sel -t -v 'string(/addon/@version)' addon.xml)
           xmlstarlet ed -L -u '/addon/@version' -v "${version}+matrix.1" addon.xml
+        working-directory: ${{ github.event.repository.name }}
+
+      - name: Kodi Add-on Checker (Matrix)
+        id: kodi-addon-checker-matrix
+        run: |
           kodi-addon-checker ${{ github.event.repository.name }} --branch=matrix
