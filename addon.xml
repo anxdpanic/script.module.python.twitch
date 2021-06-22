@@ -9,7 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] playback of clips
+[fix] fix v5.streams.by_id request - apo86
         </news>
         <assets>
             <icon>icon.png</icon>
