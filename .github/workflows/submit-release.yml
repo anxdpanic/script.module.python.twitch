@@ -62,6 +62,8 @@ jobs:
           xmlstarlet ed -L -u '//import[@addon="xbmc.python"]/@version' -v "3.0.0" addon.xml
           version=$(xmlstarlet sel -t -v 'string(/addon/@version)' addon.xml)
           xmlstarlet ed -L -u '/addon/@version' -v "${version}+matrix.1" addon.xml
+          git add .
+          git commit -m "Kodi 19 Patch"
         working-directory: ${{ github.event.repository.name }}
 
       - name: Submit to Official Repository (Matrix)

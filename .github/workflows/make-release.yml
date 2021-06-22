@@ -71,7 +71,6 @@ jobs:
           filename=${{ github.event.repository.name }}-${version}.zip
           cd ..
           zip -r $filename ${{ github.event.repository.name }}
-          mv .git ${{ github.event.repository.name }}
           echo ::set-output name=filename::$filename
         working-directory: ${{ github.event.repository.name }}
 
