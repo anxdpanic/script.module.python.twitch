@@ -52,7 +52,7 @@ jobs:
       - name: Submit to Official Repository (Isengard)
         id: submit-isengard
         run: |
-          submit-addon -r repo-scripts -b isengard --push-branch ${{ github.event.repository.name }}
+          submit-addon -r repo-scripts -b isengard --pull-request ${{ github.event.repository.name }}
         working-directory: ${{ github.event.repository.name }}
         env:
           GH_USERNAME: anxdpanic
@@ -72,7 +72,7 @@ jobs:
       - name: Submit to Official Repository (Matrix)
         id: submit-matrix
         run: |
-          submit-addon -r repo-scripts -b matrix --push-branch ${{ github.event.repository.name }}
+          submit-addon -r repo-scripts -b matrix --pull-request ${{ github.event.repository.name }}
         working-directory: ${{ github.event.repository.name }}
         env:
           GH_USERNAME: anxdpanic
