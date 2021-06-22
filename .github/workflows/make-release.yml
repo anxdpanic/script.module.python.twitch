@@ -49,6 +49,7 @@ jobs:
           mv .git ..
           rm -rf .??*
           rm *.md
+        working-directory: ${{ github.event.repository.name }}
 
       - name: Create Zip (Isengard)
         id: zip-isengard
