@@ -13,6 +13,7 @@
 from ... import keys, methods
 from ...api.parameters import Boolean, Direction, SortBy
 from ...queries import V5Query as Qry
+from ...queries import GQLQuery as GQLQry
 from ...queries import query
 
 
