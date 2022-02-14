@@ -201,7 +201,7 @@ class OAuthValidationQuery(JsonQuery):
     def __init__(self, token=None):
         _headers = {}
         if token:
-            _headers['Authorization'] = token
+            _headers['Authorization'] = 'OAuth {access_token}'.format(access_token=token)
         if 'Authorization' not in _headers:
             _headers.setdefault('Authorization', 'OAuth {access_token}'.format(access_token=OAUTH_TOKEN))
         super(JsonQuery, self).__init__(_oauthid_baseurl, _headers, {}, methods.GET)
