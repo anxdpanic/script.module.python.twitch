@@ -34,6 +34,6 @@ def get_channels(search_query, after='MA==', first=20, live_only=True, use_app_t
     q.add_param(keys.QUERY, search_query)
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
     q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
-    q.add_param(keys.LIVE_ONLY, Boolean.validate(live_only), True)
+    q.add_param(keys.LIVE_ONLY, Boolean.validate(live_only), Boolean.FALSE)
 
     return q
