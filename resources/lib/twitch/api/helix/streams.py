@@ -41,7 +41,7 @@ def get_streams(game_id=list(), user_id=list(),
 # required scope: user:read:follows
 @query
 def get_followed(user_id, after='MA==', first=20, use_app_token=False):
-    q = Qry('streams', use_app_token=use_app_token)
+    q = Qry('streams/followed', use_app_token=use_app_token)
     q.add_param(keys.AFTER, Cursor.validate(after), 'MA==')
     q.add_param(keys.FIRST, IntRange(1, 100).validate(first), 20)
     q.add_param(keys.USER_ID, user_id)
