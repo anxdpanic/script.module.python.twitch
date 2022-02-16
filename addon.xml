@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.19" provider-name="anxdpanic, A Talented Community">
+<addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.20" provider-name="anxdpanic, A Talented Community">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
         <import addon="script.module.six" version="1.11.0"/>
@@ -9,8 +9,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[fix] fix v5.users.follow_channel request - apo86
-[fix] fix v5.users.unfollow_channel request - apo86
+[upd] fixups and additions to Helix API
 [lang] updated translations from Weblate
         </news>
         <assets>
