@@ -1,5 +1,6 @@
-2.0.20
+2.0.21
 [upd] fixups and additions to Helix API
+[rem] remove v5 API
 [lang] updated translations from Weblate
 
 2.0.19
