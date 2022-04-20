@@ -25,7 +25,7 @@
         <summary lang="de_DE">Modul für die Interaktion mit der Twitch.tv-API</summary>
         <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
         <summary lang="es_ES">Módulo para interactuar con la API de Twitch.tv</summary>
-        <summary lang="fi_FI">Moduuli vuorovaikutukseen Twitch.tv API:n kanssa</summary>
+        <summary lang="fi_FI">Moduuli Twitch.tv-rajapinnan käyttöön</summary>
         <summary lang="hu_HU">Modul a Twitch.tv API -val való interakcióhoz</summary>
         <summary lang="ko_KR">Twitch.tv API와의 상호작용을 위한 모듈</summary>
         <summary lang="pl_PL">Moduł do interakcji z API Twitch.tv</summary>
@@ -35,7 +35,7 @@
         <description lang="de_DE">python-twitch für Kodi ist ein Modul für die Interaktion mit der Twitch.tv-API, basierend auf python-twitch von ingwinlu.</description>
         <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
         <description lang="es_ES">python-twitch para Kodi es un módulo para interactuar con la API de Twitch.tv basado en python-twitch de ingwinlu.</description>
-        <description lang="fi_FI">python-twitch for Kodi on moduuli vuorovaikutukseen Twitch.tv API:n kanssa, joka perustuu ingwinlu:n kehittämään python-twitchiin.</description>
+        <description lang="fi_FI">&apos;Python-twitch for Kodi&apos; on Twitch.tv-palvelun rajapinnan hyödyntämisen mahdollistava moduuli, joka perustuu kehittäjän ingwinlu luomaan python-twitch-moduuliin.</description>
         <description lang="hu_HU">A python-twitch a Kodi számára a Twitch.tv API-val való interakció modulja, amely az ingwinlu python-twitch-jén alapul.</description>
         <description lang="ko_KR">Kodi용 python-twitch는 ingwinlu의 python-twitch를 기반으로 하는 Twitch.tv API와 상호 작용하기 위한 모듈입니다.</description>
         <description lang="pl_PL">python-twitch dla Kodi to moduł do interakcji z API Twitch.tv oparty na python-twitch autorstwa ingwinlu.</description>
