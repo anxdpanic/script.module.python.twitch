@@ -11,8 +11,7 @@
 """
 
 import re
-
-from six.moves.urllib_parse import urlencode
+from urllib.parse import urlencode
 
 from . import keys
 from .log import log

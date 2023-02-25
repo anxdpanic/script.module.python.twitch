@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.python.twitch" name="python-twitch for Kodi" version="2.0.21" provider-name="anxdpanic, A Talented Community">
     <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
+        <import addon="xbmc.python" version="3.0.1"/>
         <import addon="script.module.six" version="1.11.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
     </requires>
@@ -9,12 +9,13 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <news>
-[upd] fixups and additions to Helix API
-[rem] remove v5 API
+[rem] removed support for Kodi versions pre-Nexus v20
+[rem] removed python 2 support
+[rem] removed dependency on six
 [lang] updated translations from Weblate
         </news>
         <assets>
-            <icon>icon.png</icon>
+            <icon>resources/media/icon.png</icon>
         </assets>
         <platform>all</platform>
         <license>GPL-3.0-only</license>
