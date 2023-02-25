@@ -10,8 +10,6 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
-from six.moves import range
-
 from base64 import b64decode
 
 

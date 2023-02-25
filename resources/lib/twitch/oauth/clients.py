@@ -9,12 +9,12 @@
     See LICENSES/GPL-3.0-only for more information.
 """
 
+from urllib.parse import urlsplit
+from urllib.parse import urlencode
+
 from .. import CLIENT_ID, CLIENT_SECRET, methods
 from ..queries import OAuthQuery as Qry
 from ..queries import query
-
-from six.moves.urllib_parse import urlsplit, urlencode
-
 
 class MobileClient:
     def __init__(self, client_id='', client_secret=''):

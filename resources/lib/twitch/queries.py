@@ -11,8 +11,7 @@
 """
 
 from copy import deepcopy
-
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from . import CLIENT_ID, OAUTH_TOKEN, APP_TOKEN
 from .exceptions import ResourceUnavailableException

@@ -1,3 +1,9 @@
+3.0.0
+[rem] removed support for Kodi versions pre-Nexus v20
+[rem] removed python 2 support
+[rem] removed dependency on six
+[lang] updated translations from Weblate
+
 2.0.21
 [upd] fixups and additions to Helix API
 [rem] remove v5 API

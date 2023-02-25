@@ -11,11 +11,11 @@
 """
 
 import sys
-import requests
+from urllib.error import URLError
+from urllib.parse import quote_plus
+from urllib.parse import urlencode
 
-from six.moves.urllib.error import URLError
-from six.moves.urllib.parse import quote_plus  # NOQA
-from six.moves.urllib.parse import urlencode
+import requests
 
 from .keys import USER_AGENT, USER_AGENT_STRING
 from .log import log

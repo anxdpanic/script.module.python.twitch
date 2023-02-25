@@ -12,6 +12,7 @@
 """
 
 import json
+from urllib.parse import urlencode
 
 from .. import keys
 from ..api.parameters import Boolean
@@ -19,8 +20,6 @@ from ..parser import m3u8, clip_embed
 from ..queries import ClipsQuery, HiddenApiQuery, UsherQuery, GQLQuery
 from ..queries import query
 from ..log import log
-
-from six.moves.urllib.parse import urlencode
 
 ACCESS_TOKEN_EXCEPTION = {
     'error': 'Error',
